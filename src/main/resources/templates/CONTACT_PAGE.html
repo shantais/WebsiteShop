@@ -19,41 +19,18 @@
 </head>
 <body>
 <!-- Navigation-->
-<nav id="navbar" class="navbar navbar-expand-lg p-3 mb-2 bg-warning text-dark sticky-top" style="background-color: #e3f2fd;">
-  <div class="container px-4 px-lg-5">
-    <a class="navbar-brand" href="HOME_PAGE.html">BestBuyKamps</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-        <li class="nav-item dropdown">
-          <a id="shop" class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#!">All Products</a></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-          </ul>
-        </li>
-        <li id="sale" class="nav-item"><a class="nav-link active" aria-current="page" href="SALE_PAGE.html">Sale</a></li>
-        <form class="form-inline">
-          <div id="search" class="input-group">
-            <input id="search-button" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button id="nav-button" class="btn btn-outline-dark" type="submit">Search</button>
-          </div>
-        </form>
-        <input id="login" class="btn btn-outline-dark" type="button" value="Log in" onclick="window.location.href = 'LOGIN_PAGE.html';">
-        <li id="contact" class="nav-item"><a class="nav-link" href="CONTACT_PAGE.html">Contact</a></li>
-      </ul>
-      <form class="d-flex">
-        <button class="btn btn-outline-dark" type="submit" id="cart">
-          <i class="bi-cart-fill me-1"></i>
-          Cart
-          <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-        </button>
-      </form>
-    </div>
-  </div>
+<nav class="navbar navbar-light bg-light sticky-top" >
+  <a class="navbar-brand" href="HOME_PAGE.html">BestBuyKamps</a>
+  <form class="form-inline">
+    <button type="button" class="btn btn-outline-secondary mr-3">Products</button>
+    <button type="button" class="btn btn-outline-secondary mr-3">Sale</button>
+    <button type="button" class="btn btn-outline-secondary mr-3">Cart</button>
+    <button type="button" class="btn btn-outline-secondary mr-3">Log in</button>
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+  </form>
 </nav>
+<!-- Kontakt-->
 <div class="container contact-form">
   <div class="contact-image">
     <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
@@ -87,10 +64,10 @@
 <section class="fixed-bottom mb-1 bg-dark p-1 ">
             <span id="icons-footer">
             <!-- Linkedin -->
-            <a class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/in/paweł-janowicz-4238a2223" role="button"><i class="bi bi-linkedin"></i></a>
+            <a class="btn btn-outline-light btn-floating m-0" href="https://www.linkedin.com/in/paweł-janowicz-4238a2223" role="button"><i class="bi bi-linkedin"></i></a>
 
               <!-- Github -->
-            <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/PawelJanowicz1" role="button"><i class="bi bi-github"></i></a>
+            <a class="btn btn-outline-light btn-floating m-0" href="https://github.com/PawelJanowicz1" role="button"><i class="bi bi-github"></i></a>
                 </span>
 </section>
 <script src="/templates/js/scripts.js"></script>

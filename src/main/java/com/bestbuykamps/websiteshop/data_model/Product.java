@@ -19,15 +19,15 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @Column (name = "discount_id", nullable = false)
+    //zmiana na true bo błąd do ogarnięcia !!!! MICHAŁ
+    @Column (name = "discount_id", nullable = true)
     private Long discountId;
 
     @ManyToOne
     @JoinColumn(name = "discount_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Discount discount;
 
-    public Product(Long id, String nameOfTheGame) {
-        this.id = id;
+    public Product( String nameOfTheGame ) {
         name = nameOfTheGame;
     }
 

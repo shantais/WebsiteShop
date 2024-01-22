@@ -26,7 +26,29 @@ public class Product {
     @JoinColumn(name = "discount_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Discount discount;
 
+    public Product(Long id, String nameOfTheGame) {
+        this.id = id;
+        name = nameOfTheGame;
+    }
+
+    public Object getProductId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", discountId=" + discountId +
+                ", discount=" + discount +
+                '}';
+    }
 }
+
+
 
 
 

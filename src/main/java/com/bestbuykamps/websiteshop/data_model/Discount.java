@@ -1,9 +1,9 @@
 package com.bestbuykamps.websiteshop.data_model;
-
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
-@Table(name = "discount")
 public class Discount {
 
     @Id
@@ -11,11 +11,10 @@ public class Discount {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_of_discount", nullable = false)
     private DiscountType typeOfDiscount;
 
-    @Column(name = "discount", nullable = false)
-    private Double discount;
+    @Column(name = "discount")
+    private BigDecimal discount;
 
     // Konstruktory, gettery, settery i inne metody
 
@@ -35,18 +34,11 @@ public class Discount {
         this.typeOfDiscount = typeOfDiscount;
     }
 
-    public Double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 }
-/*
-CREATE TABLE discount (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    typeOfDiscount ENUM('percent', 'value') NOT NULL,
-    discount DOUBLE NOT NULL
-);
- */

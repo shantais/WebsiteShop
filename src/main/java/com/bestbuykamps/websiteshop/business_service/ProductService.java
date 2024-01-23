@@ -24,9 +24,7 @@ public class ProductService {
     }
 
     public void addProduct(){
-        Discount discount =new Discount();
-        productRepository.save( new Product( "The Sims"));
-        productRepository.save( new Product( "Gothic"));
+
     }
 
 //    public void addProduct(Product product) {

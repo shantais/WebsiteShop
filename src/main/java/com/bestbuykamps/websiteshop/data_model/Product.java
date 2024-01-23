@@ -19,20 +19,54 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    //zmiana na true bo błąd do ogarnięcia !!!! MICHAŁ
-    @Column (name = "discount_id", nullable = true)
-    private Long discountId;
-
     @ManyToOne
-    @JoinColumn(name = "discount_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "discount_id", referencedColumnName = "id")
     private Discount discount;
 
-    public Product( String nameOfTheGame ) {
-        name = nameOfTheGame;
+    public Product() {
+        // Pusty konstruktor dla JPA
     }
 
-    public Object getProductId() {
+    public Product(String name, String category, Double price) {
+        this.name = name;
+        this.category = category;
+        this.price = price;
+    }
+
+    public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
 
     @Override
@@ -42,15 +76,10 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", price=" + price +
-                ", discountId=" + discountId +
                 ", discount=" + discount +
                 '}';
     }
 }
-
-
-
-
 
 /*
 CREATE TABLE product (

@@ -13,7 +13,7 @@ public class Discount {
     @Enumerated(EnumType.STRING)
     private DiscountType typeOfDiscount;
 
-    @Column(name = "discount")
+    @Column(name = "discount2")
     private BigDecimal discount;
 
     // Konstruktory, gettery, settery i inne metody

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "discount")
 public class Discount {
 
     @Id
@@ -13,7 +14,7 @@ public class Discount {
     @Enumerated(EnumType.STRING)
     private DiscountType typeOfDiscount;
 
-    @Column(name = "discount2")
+    @Column(name = "discount_value")
     private BigDecimal discount;
 
     // Konstruktory, gettery, settery i inne metody

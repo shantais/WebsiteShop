@@ -19,15 +19,7 @@ public class ProductService {
 
     // metoda na wyciągnięcie wszystkich produktów z bazy do listy
     public List<Product> getProducts() {
-        addProduct();
         return productRepository.findAll();
     }
 
-    public void addProduct(){
-
-    }
-
-//    public void addProduct(Product product) {
-//        if(product==null) throw new RuntimeException("No product found");
-//    }
 }

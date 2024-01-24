@@ -19,7 +19,7 @@ public class ProductService {
 
     // metoda na wyciągnięcie wszystkich produktów z bazy do listy
     public List<Product> getProducts() {
-        return productRepository.findAll();
+        return this.productRepository.findAll();
     }
 
 }

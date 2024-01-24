@@ -1,4 +1,4 @@
-package com.bestbuykamps.websiteshop.model;
+package com.bestbuykamps.websiteshop.data_model;
 
 public class User {
     private final Integer userId;

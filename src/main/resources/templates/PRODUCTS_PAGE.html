@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>BestBuyKamps - Sale</title>
+    <title>BestBuyKamps - Contact</title>
     <!-- Favicon-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="icon" type="image/x-icon" href="../static/favicon.ico" />
@@ -13,8 +13,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../styles.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body>
+<body class="bg-secondary">
 <!-- Navigation-->
 <nav class="navbar navbar-light bg-light sticky-top" >
     <a class="navbar-brand" href="HOME_PAGE.html">BestBuyKamps</a>
@@ -27,16 +30,40 @@
         <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
     </form>
 </nav>
+<!-- Content -->
+<div class="container mt-4">
+    <a href="/">Back</a><br />
+    <h1>Product List</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product: ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td>
+                <img th:src="@{${product.imagePath}}" alt="Product Image" style="width: 100px; height: auto;"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <!-- Footer-->
-<section class="fixed-bottom mb-1 bg-dark p-1 ">
-            <span id="icons-footer">
-            <!-- Linkedin -->
-            <a class="btn btn-outline-light btn-floating m-0" href="https://www.linkedin.com/in/paweł-janowicz-4238a2223" role="button"><i class="bi bi-linkedin"></i></a>
+<section class="fixed-bottom mb-1 bg-dark p-1 d-flex align-items-center justify-content-center">
+    <span id="icons-footer">
+        <!-- Linkedin -->
+        <a class="btn btn-outline-light btn-floating m-0" href="https://www.linkedin.com/in/paweł-janowicz-4238a2223" role="button"><i class="bi bi-linkedin"></i></a>
 
-                <!-- Github -->
-            <a class="btn btn-outline-light btn-floating m-0" href="https://github.com/PawelJanowicz1" role="button"><i class="bi bi-github"></i></a>
-                </span>
+        <!-- Github -->
+        <a class="btn btn-outline-light btn-floating m-0" href="https://github.com/PawelJanowicz1" role="button"><i class="bi bi-github"></i></a>
+    </span>
 </section>
 <script src="/templates/js/scripts.js"></script>
 </body>

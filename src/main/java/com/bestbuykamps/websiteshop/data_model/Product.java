@@ -23,6 +23,9 @@ public class Product {
     @JoinColumn(name = "discount_id", referencedColumnName = "id")
     private Discount discount;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     public Product() {
         // Pusty konstruktor dla JPA
     }
@@ -69,6 +72,14 @@ public class Product {
         this.discount = discount;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -77,6 +88,7 @@ public class Product {
                 ", category='" + category + '\'' +
                 ", price=" + price +
                 ", discount=" + discount +
+                ", imagePath='" + imagePath + '\'' +
                 '}';
     }
 }

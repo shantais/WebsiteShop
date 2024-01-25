@@ -22,4 +22,14 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
+    public void addProduct(Product product) {
+        if(product==null) throw new RuntimeException("Product cannot be null");
+        this.productRepository.save(product);
+    }
+
+    public void deleteProduct(Product product) {
+        if(product==null) throw new RuntimeException("Product cannot be null");
+        // możnaby pewnie dodać jeszcze zabezpieczenie, gdy nie ma takiego w bazie
+        this.productRepository.delete(product);
+    }
 }

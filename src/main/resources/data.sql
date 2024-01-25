@@ -7,34 +7,34 @@ INSERT INTO discount (type_of_discount, discount_value) VALUES
 
 -- Inserty dla produktów
 INSERT INTO product (name, category, price, discount_id, image_path) VALUES
-    ('The Witcher 3', 'Gry Komputerowe', 59.99, 1 , '/images/callofduty.jpg');
+    ('Call of duty Modern Warfare 3', 'Gry Komputerowe', 59.99, 1 , '/images/callofduty.jpg');
 
 INSERT INTO product (name, category, price, discount_id, image_path) VALUES
-    ('Cyberpunk 2077', 'Gry Komputerowe', 49.99, 2, '/images/callofduty.jpg');
+    ('Cyberpunk 2077', 'Gry Komputerowe', 49.99, 2, '/images/Cyberpunk_2077.jpeg');
 
 INSERT INTO product (name, category, price, discount_id,image_path) VALUES
-    ('Assassin''s Creed Valhalla', 'Gry Komputerowe', 69.99, 1, '/images/callofduty.jpg');
+    ('Assassin''s Creed Valhalla', 'Gry Komputerowe', 69.99, 1, '/images/ac_valhalla.jpeg');
 
 INSERT INTO product (name, category, price, discount_id,image_path) VALUES
-    ('DOOM Eternal', 'Gry Komputerowe', 39.99, 2, '/images/callofduty.jpg');
+    ('Dying Light 2', 'Gry Komputerowe', 39.99, 2, '/images/dying.jpeg');
 
 INSERT INTO product (name, category, price, discount_id,image_path) VALUES
-    ('FIFA 22', 'Gry Komputerowe', 59.99, 1, '/images/callofduty.jpg');
+    ('Hogwart Legacy', 'Gry Komputerowe', 59.99, 1, '/images/hogwart_legacy.webp');
 
 INSERT INTO product (name, category, price, discount_id,image_path) VALUES
-    ('Minecraft', 'Gry Komputerowe', 29.99, 2, '/images/callofduty.jpg');
+    ('Uncharted legacy of thieves collection', 'Gry Komputerowe', 29.99, 2, '/images/uncharted.jpg');
 
 INSERT INTO product (name, category, price, discount_id,image_path) VALUES
-    ('World of Warcraft', 'Gry Komputerowe', 49.99, 1, '/images/callofduty.jpg');
+    ('Forza horizon 5', 'Gry Komputerowe', 49.99, 1, '/images/forza_horizon.jpeg');
 
 INSERT INTO product (name, category, price, discount_id,image_path) VALUES
-    ('Overwatch', 'Gry Komputerowe', 39.99, 2, '/images/callofduty.jpg');
+    ('Spider-Man 2', 'Gry Komputerowe', 39.99, 2, '/images/spiderman.jpeg');
 
 INSERT INTO product (name, category, price, discount_id,image_path) VALUES
-    ('The Elder Scrolls V: Skyrim', 'Gry Komputerowe', 39.99, 1, '/images/callofduty.jpg');
+    ('The Sims 4: Tiny Living Stuff', 'Gry Komputerowe', 39.99, 1, '/images/sims.jpg');
 
 INSERT INTO product (name, category, price, discount_id,image_path) VALUES
-    ('Stardew Valley', 'Gry Komputerowe', 14.99, 2, '/images/callofduty.jpg');
+    ('Oddworld Soulstorm Day One Oddition', 'Gry Komputerowe', 14.99, 2, '/images/soulstorm.jpg');
 
 
 -- inserty dla warehouse

@@ -20,8 +20,6 @@ public class CartItem {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    // Konstruktory, gettery, settery i inne metody...
-
     public Long getId() {
         return id;
     }

@@ -2,9 +2,9 @@ package com.bestbuykamps.websiteshop.data_model;
 
 import jakarta.persistence.*;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
 
 @Entity
@@ -13,14 +13,12 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    static private Map<Long, Integer> cartMap = new HashMap<>() ;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();// zamienić na mapę
     @Column(name = "user_id")
     private Long userId;
 
-
-    public Map<Long, Integer> getCartMap() {
-        return cartMap;
-    }
     public Long getId() {
         return id;
     }
@@ -39,21 +37,16 @@ public class Cart {
 
 
     public void addCartItem(CartItem cartItem) {
+        //zmienić logikę
         cartItems.add(cartItem);
         cartItem.setCart(this);
     }
 
     public void removeCartItemById(Long cartItemId) {
-        Iterator<CartItem> iterator = cartItems.iterator();
-        while (iterator.hasNext()) {
-            CartItem cartItem = iterator.next();
-            if (cartItem.getId().equals(cartItemId)) {
-                iterator.remove();
-                cartItem.setCart(null);
-                break;
-            }
-        }
+       //dodać logikę
     }
+
+    //metoda na wyszukanie  w mapie po id produktu
 
 
     @Override

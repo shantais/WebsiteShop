@@ -2,9 +2,9 @@ package com.bestbuykamps.websiteshop.data_model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 
 @Entity
@@ -13,12 +13,14 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<CartItem> cartItems = new ArrayList<>();
+    static private Map<Long, Integer> cartMap = new HashMap<>() ;
     @Column(name = "user_id")
     private Long userId;
 
+
+    public Map<Long, Integer> getCartMap() {
+        return cartMap;
+    }
     public Long getId() {
         return id;
     }
@@ -35,9 +37,6 @@ public class Cart {
         this.userId = userId;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
 
     public void addCartItem(CartItem cartItem) {
         cartItems.add(cartItem);

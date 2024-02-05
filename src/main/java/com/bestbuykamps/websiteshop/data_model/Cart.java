@@ -37,13 +37,11 @@ public class Cart {
     }
 
 
-    public void addCartItem(CartItem cartItem) {
+    public void addProductToCart(Long productId) {
         //zmienić logikę
-        cartItems.add(cartItem);
-        cartItem.setCart(this);
     }
 
-    public void removeCartItemById(Long cartItemId) {
+    public void removeProductFromCart(Long productId) {
        //dodać logikę
     }
 

@@ -15,7 +15,7 @@ public class Cart {
     private Long id;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<CartItem> cartItems = new ArrayList<>();
+    private List<CartItem> cartItems = new ArrayList<>();// zamienić na mapę
     @Column(name = "user_id")
     private Long userId;
 
@@ -35,26 +35,18 @@ public class Cart {
         this.userId = userId;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
 
     public void addCartItem(CartItem cartItem) {
+        //zmienić logikę
         cartItems.add(cartItem);
         cartItem.setCart(this);
     }
 
     public void removeCartItemById(Long cartItemId) {
-        Iterator<CartItem> iterator = cartItems.iterator();
-        while (iterator.hasNext()) {
-            CartItem cartItem = iterator.next();
-            if (cartItem.getId().equals(cartItemId)) {
-                iterator.remove();
-                cartItem.setCart(null);
-                break;
-            }
-        }
+       //dodać logikę
     }
+
+    //metoda na wyszukanie  w mapie po id produktu
 
 
     @Override

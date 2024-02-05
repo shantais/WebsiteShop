@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/")
 public class Product_Controller {
 
     private final ProductService productService;
@@ -27,17 +27,17 @@ public class Product_Controller {
         model.addAttribute("products", this.productService.getProducts());
         return "PRODUCTS_PAGE";
     }
-//    @GetMapping("/images/{imageName}")
-//    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
-//
-//        Resource imageResource = new ClassPathResource("static/images/" + imageName);
-//
-//        if (imageResource.exists() && imageResource.isReadable()) {
-//            return ResponseEntity.ok()
-//                    .contentType(MediaType.IMAGE_JPEG)
-//                    .body(imageResource);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @GetMapping("/images/{imageName}")
+    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
+
+        Resource imageResource = new ClassPathResource("static/images/" + imageName);
+
+        if (imageResource.exists() && imageResource.isReadable()) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(imageResource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

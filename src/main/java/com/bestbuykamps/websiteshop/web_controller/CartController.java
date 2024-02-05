@@ -1,11 +1,11 @@
 package com.bestbuykamps.websiteshop.web_controller;
 
 import com.bestbuykamps.websiteshop.business_service.CartService;
-import com.bestbuykamps.websiteshop.data_model.Product;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/cart")
+@Controller
+@RequestMapping("/cart/products")
 public class CartController {
     private final CartService cartService;
     private Long productId;
@@ -13,12 +13,10 @@ public class CartController {
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
-
-    // dodanie do koszyka
-    @RequestMapping(path = "/products/{productId}", method = RequestMethod.POST)
-    public void addProduct(@PathVariable Long productId){
-        this.productId = productId;
-        this.cartService.addProductToCart(productId);
+    @PostMapping("/add")
+    public String addProductToCart(@RequestParam Long productId) {
+        cartService.addProductToCart(productId);
+        return "redirect:forward:/PRODUCT_ADDED.html";
     }
 
     // usunięcie z koszyka

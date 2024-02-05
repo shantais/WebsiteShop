@@ -1,6 +1,12 @@
 package com.bestbuykamps.websiteshop.business_service;
 
 import com.bestbuykamps.websiteshop.data_model.*;
+import com.bestbuykamps.websiteshop.data_model.CartItemRepository;
+import com.bestbuykamps.websiteshop.data_model.CartRepository;
+import com.bestbuykamps.websiteshop.data_model.Product;
+import com.bestbuykamps.websiteshop.data_model.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -9,7 +15,7 @@ import java.util.Optional;
 public class CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
-
+    private static final Logger log = LoggerFactory.getLogger(CartService.class);
 
 
     public CartService(CartRepository cartRepository, ProductRepository productRepository) {
@@ -19,6 +25,7 @@ public class CartService {
 
 
     public void addProductToCart(Long productId) {
+        log.info("Adding product with ID {} to the cart.", productId);
         //odpytanie czy koszyk istnieje
         //jak nie istnieje to tworzymy koszyk i zwracamy koszyk X
         //jak istnieje to zwracamy koszyk X

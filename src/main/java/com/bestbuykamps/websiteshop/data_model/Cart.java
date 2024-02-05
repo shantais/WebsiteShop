@@ -24,10 +24,6 @@ public class Cart {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -36,17 +32,13 @@ public class Cart {
         this.userId = userId;
     }
 
-
-    public void addProductToCart(Long productId) {
-        //zmienić logikę
+    public static Map<Long, Integer> getCartItems() {
+        return cartItems;
     }
 
-    public void removeProductFromCart(Long productId) {
-       //dodać logikę
+    public static void setCartItems(Map<Long, Integer> cartItems) {
+        Cart.cartItems = cartItems;
     }
-
-    //metoda na wyszukanie  w mapie po id produktu
-
 
     @Override
     public String toString() {

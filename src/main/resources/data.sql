@@ -48,3 +48,5 @@ INSERT INTO warehouse (product_id, quantity) VALUES (7, 80);
 INSERT INTO warehouse (product_id, quantity) VALUES (8, 15);
 INSERT INTO warehouse (product_id, quantity) VALUES (9, 40);
 INSERT INTO warehouse (product_id, quantity) VALUES (10, 60);
+
+INSERT INTO cart (user_id) VALUES (NULL);

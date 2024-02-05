@@ -2,10 +2,7 @@ package com.bestbuykamps.websiteshop.data_model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Entity
@@ -15,10 +12,24 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    static private Map<Long,Integer> cartItems;
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    @OneToMany(mappedBy = "cart" , cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<CartItem> cartItems ;
+
+
+    public Cart() {
+    }
 
     @Column(name = "user_id")
     private Long userId;
+
 
     public Long getId() {
         return id;
@@ -32,13 +43,13 @@ public class Cart {
         this.userId = userId;
     }
 
-    public static Map<Long, Integer> getCartItems() {
-        return cartItems;
-    }
-
-    public static void setCartItems(Map<Long, Integer> cartItems) {
-        Cart.cartItems = cartItems;
-    }
+//    public void  Map<Long, Integer> getCartItems() {
+//       // return cartItems;
+//    }
+//
+//    public  void setCartItems(Map<Long, Integer> cartItems) {
+//       // Cart.cartItems = cartItems;
+//    }
 
     @Override
     public String toString() {

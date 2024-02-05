@@ -1,10 +1,9 @@
 package com.bestbuykamps.websiteshop.business_service;
 
-import com.bestbuykamps.websiteshop.data_model.CartItemRepository;
-import com.bestbuykamps.websiteshop.data_model.CartRepository;
-import com.bestbuykamps.websiteshop.data_model.Product;
-import com.bestbuykamps.websiteshop.data_model.ProductRepository;
+import com.bestbuykamps.websiteshop.data_model.*;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -23,6 +22,10 @@ public class CartService {
         //odpytanie czy koszyk istnieje
         //jak nie istnieje to tworzymy koszyk i zwracamy koszyk X
         //jak istnieje to zwracamy koszyk X
+
+        Optional<Cart> cart1 = cartRepository.findById(1L);
+        boolean match = cart1.stream().anyMatch(item -> item.getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
+
 
         // do zrobienia - dodać cart map do carta
         // sprawdzić czy jest klucz o wartości productID

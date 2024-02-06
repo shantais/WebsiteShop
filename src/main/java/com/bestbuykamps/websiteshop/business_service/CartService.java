@@ -69,4 +69,8 @@ public class CartService {
         //jeżeli q: > 1(2,3...X) zmniejszamy q: o 1
 
     }
+
+    public List<CartItem> getCartItems() {
+        return this.cartRepository.findById(1L).get().getCartItems();
+    }
 }

@@ -43,7 +43,6 @@ public class CartService {
             }
             cartRepository.save(cart1.get());
         } else {
-            List<CartItem> cartItemList = cart1.get().getCartItems();
             CartItem cartItem = new CartItem();
             cartItem.setCart(cart1.get());
             cartItem.setQuantity(1);

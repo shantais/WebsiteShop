@@ -69,7 +69,7 @@ public class CartService {
 
     }
 
-    public List<CartItem> getCartItems() {
-        return this.cartRepository.findById(1L).get().getCartItems();
+    public List<CartItem> getCartItems(Long cartId) {
+        return this.cartRepository.findById(cartId).get().getCartItems();
     }
 }

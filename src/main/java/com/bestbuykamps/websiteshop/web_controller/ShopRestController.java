@@ -2,6 +2,7 @@ package com.bestbuykamps.websiteshop.web_controller;
 
 import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.business_service.ProductService;
+import com.bestbuykamps.websiteshop.data_model.Cart;
 import com.bestbuykamps.websiteshop.data_model.CartItem;
 import com.bestbuykamps.websiteshop.data_model.Product;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +35,8 @@ public class ShopRestController {
         this.productService.deleteProduct(product);
     }
 
-
-    @RequestMapping(path = "/cart/cartitemlist", method = RequestMethod.GET)
-    public List<CartItem> getCart() {
-        return this.cartService.getCartItems();
+    @RequestMapping(path = "/cart", method = RequestMethod.POST)
+    public List<CartItem> showCart(@RequestBody Cart cart) {
+        return this.cartService.getCartItems(cart.getId());
     }
 }

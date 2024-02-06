@@ -27,6 +27,10 @@ public class Product_Controller {
         model.addAttribute("products", this.productService.getProducts());
         return "PRODUCTS_PAGE";
     }
+    @GetMapping("/cart")
+    public String showCartPage() {
+        return "CART_PAGE.html";
+    }
     @GetMapping("/images/{imageName}")
     public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
 

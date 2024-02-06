@@ -9,7 +9,14 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     private final CartService cartService;
     private Long productId;
-
+    @GetMapping("/cart")
+    public String showCartPage() {
+        return "redirect:forward:/CART_PAGE.html";
+    }
+    @GetMapping("/")
+    public String showProductsPage() {
+        return "redirect:forward:/PRODUCTS_PAGE.html";
+    }
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }

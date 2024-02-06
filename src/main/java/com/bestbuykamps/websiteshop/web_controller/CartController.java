@@ -29,11 +29,17 @@ public class CartController {
         logger.info("Product with ID {} added to cart", productId);
         return "redirect:forward:/PRODUCT_ADDED.html";
     }
+    @PostMapping("/remove")
+    public String removeProduct(@RequestParam Long productId) {
+        this.cartService.deleteProductFromCart(productId);
+        logger.info("Product with ID {} removed from cart", productId);
+        return "redirect:forward:/PRODUCT_REMOVED.html";
+    }
     @PostMapping("/delete")
     public String deleteProduct(@RequestParam Long productId) {
         this.cartService.deleteProductFromCart(productId);
         logger.info("Product with ID {} deleted from cart", productId);
-        return "redirect:forward:/PRODUCT_ADDED.html";
+        return "redirect:forward:/PRODUCT_DELETE.html";
     }
 
     // zwiększenie quantity dla obiektu z listy koszyka

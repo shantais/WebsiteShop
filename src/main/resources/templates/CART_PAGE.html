@@ -44,10 +44,16 @@
                     <span class="glyphicon glyphicon-plus"></span>
                   </button>
                 </form>
-                <form th:action="@{/cart/products/delete}" method="post">
+                <form th:action="@{/cart/products/remove}" method="post">
                   <input type="hidden" name="productId" value="1">
                   <button type="submit" class="btn btn-danger btn-xs">
                     <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </form>
+                <form th:action="@{/cart/products/delete}" method="post">
+                  <input type="hidden" name="productId" value="1">
+                  <button type="submit" class="btn btn-warning btn-xs">
+                    <span class="glyphicon glyphicon-trash"></span>
                   </button>
                 </form>
               </div>

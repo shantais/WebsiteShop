@@ -20,6 +20,10 @@ public class Cart {
         this.cartItems = cartItems;
     }
 
+    public void addCartItem(CartItem cartItem) {
+        cartItems.add(cartItem);
+    }
+
     @OneToMany(mappedBy = "cart" , cascade = CascadeType.ALL,orphanRemoval = true)
     private List<CartItem> cartItems ;
 

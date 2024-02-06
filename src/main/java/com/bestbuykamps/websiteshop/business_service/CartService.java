@@ -3,24 +3,27 @@ package com.bestbuykamps.websiteshop.business_service;
 import com.bestbuykamps.websiteshop.data_model.*;
 import com.bestbuykamps.websiteshop.data_model.CartItemRepository;
 import com.bestbuykamps.websiteshop.data_model.CartRepository;
-import com.bestbuykamps.websiteshop.data_model.Product;
 import com.bestbuykamps.websiteshop.data_model.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
+
+    private final CartItemRepository cartItemRepository;
     private static final Logger log = LoggerFactory.getLogger(CartService.class);
 
 
-    public CartService(CartRepository cartRepository, ProductRepository productRepository) {
+    public CartService(CartRepository cartRepository, ProductRepository productRepository, CartItemRepository cartItemRepository) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
+        this.cartItemRepository = cartItemRepository;
     }
 
 
@@ -31,16 +34,23 @@ public class CartService {
         //jak istnieje to zwracamy koszyk X
 
         Optional<Cart> cart1 = cartRepository.findById(1L);
-        boolean match = cart1.stream().anyMatch(item -> item.getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
-
-    if(match){
-    for (CartItem cartItem : cart1.get().getCartItems()) {
-        if (cartItem.getProduct().getId().equals(productId)) {
-            cartItem.setQuantity(cartItem.getQuantity() + 1);
+        boolean match = cart1.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
+        if (match) {
+            for (CartItem cartItem : cart1.get().getCartItems()) {
+                if (cartItem.getProduct().getId().equals(productId)) {
+                    cartItem.setQuantity(cartItem.getQuantity() + 1);
+                }
+            }
+            cartRepository.save(cart1.get());
+        } else {
+            List<CartItem> cartItemList = cart1.get().getCartItems();
+            CartItem cartItem = new CartItem();
+            cartItem.setCart(cart1.get());
+            cartItem.setQuantity(1);
+            cartItem.setProduct(productRepository.getById(productId));
+            cart1.get().addCartItem(cartItem);
+            cartRepository.save(cart1.get());
         }
-    }
-    cartRepository.save(cart1.get());
-}
 
 
         // do zrobienia - dodać cart map do carta

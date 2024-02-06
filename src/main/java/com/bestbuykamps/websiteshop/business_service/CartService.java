@@ -33,6 +33,15 @@ public class CartService {
         Optional<Cart> cart1 = cartRepository.findById(1L);
         boolean match = cart1.stream().anyMatch(item -> item.getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
 
+    if(match){
+    for (CartItem cartItem : cart1.get().getCartItems()) {
+        if (cartItem.getProduct().getId().equals(productId)) {
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+        }
+    }
+    cartRepository.save(cart1.get());
+}
+
 
         // do zrobienia - dodać cart map do carta
         // sprawdzić czy jest klucz o wartości productID

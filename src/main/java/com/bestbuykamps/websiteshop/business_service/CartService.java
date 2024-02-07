@@ -66,7 +66,23 @@ public class CartService {
         // istnieje - sprawdzić czy jest klucz w mapie o wartości productId
         // jeżeli q: równe 1 , usuwamy klucz+wartość
         //jeżeli q: > 1(2,3...X) zmniejszamy q: o 1
+        Optional<Cart> cart1 = cartRepository.findById(1L);
+        boolean match = cart1.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
+        if (match) {
+            for (CartItem cartItem : cart1.get().getCartItems()) {
+                if (cartItem.getProduct().getId().equals(productId)) {
+                    cartItem.setQuantity(cartItem.getQuantity() - 1);
+                    if(cartItem.getQuantity() == 0){
+                        trashProductFromCart(cartItem.getProduct().getId());
+                    }
+                }
+            }
+            cartRepository.save(cart1.get());
+        }
+    }
 
+    public void trashProductFromCart(Long productId) {
+        Optional<Cart> cart1 = cartRepository.findById(1L);
     }
 
     public List<CartItem> getCartItems(Long cartId) {

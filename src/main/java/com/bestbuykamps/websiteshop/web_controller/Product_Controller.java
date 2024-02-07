@@ -1,5 +1,6 @@
 package com.bestbuykamps.websiteshop.web_controller;
 
+import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.business_service.ProductService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -9,17 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 @Controller
 @RequestMapping("/")
 public class Product_Controller {
 
     private final ProductService productService;
+    private final CartService cartService;
 
-    public Product_Controller(ProductService productService) {
+    public Product_Controller(ProductService productService, CartService cartService) {
         this.productService = productService;
 
+        this.cartService = cartService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -28,8 +29,9 @@ public class Product_Controller {
         return "PRODUCTS_PAGE";
     }
    @GetMapping("/cart")
-    public String showCartPage() {
-        return "CART_PAGE.html";
+    public String showCartPage(Model model) {
+       model.addAttribute("cartItems", this.cartService.getCartItems(1L));
+       return "CART_PAGE.html";
    }
     @GetMapping("/images/{imageName}")
     public ResponseEntity<Resource> getImage(@PathVariable String imageName) {

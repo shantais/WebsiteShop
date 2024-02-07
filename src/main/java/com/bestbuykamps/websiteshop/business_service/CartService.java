@@ -33,22 +33,22 @@ public class CartService {
         //jak nie istnieje to tworzymy koszyk i zwracamy koszyk X
         //jak istnieje to zwracamy koszyk X
 
-        Optional<Cart> cart1 = cartRepository.findById(1L);
-        boolean match = cart1.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
+        Optional<Cart> cart = cartRepository.findById(1L);
+        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {
-            for (CartItem cartItem : cart1.get().getCartItems()) {
+            for (CartItem cartItem : cart.get().getCartItems()) {
                 if (cartItem.getProduct().getId().equals(productId)) {
                     cartItem.setQuantity(cartItem.getQuantity() + 1);
                 }
             }
-            cartRepository.save(cart1.get());
+            cartRepository.save(cart.get());
         } else {
             CartItem cartItem = new CartItem();
-            cartItem.setCart(cart1.get());
+            cartItem.setCart(cart.get());
             cartItem.setQuantity(1);
             cartItem.setProduct(productRepository.getById(productId));
-            cart1.get().addCartItem(cartItem);
-            cartRepository.save(cart1.get());
+            cart.get().addCartItem(cartItem);
+            cartRepository.save(cart.get());
         }
 
 
@@ -60,29 +60,41 @@ public class CartService {
         // przy dodaniu sprawdzać czy w magazynie starczy produktów po dodaniu
     }
 
-    public void deleteProductFromCart(Long productId) {
+    public void deleteProductFromCart(Long cartID ,Long productId) {
         // odpytanie czy koszyk istnieje
         // nie istnieje - ogarnać wyjątek
         // istnieje - sprawdzić czy jest klucz w mapie o wartości productId
         // jeżeli q: równe 1 , usuwamy klucz+wartość
         //jeżeli q: > 1(2,3...X) zmniejszamy q: o 1
-        Optional<Cart> cart1 = cartRepository.findById(1L);
-        boolean match = cart1.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
+        Optional<Cart> cart = cartRepository.findById(cartID);
+        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {
-            for (CartItem cartItem : cart1.get().getCartItems()) {
+            for (CartItem cartItem : cart.get().getCartItems()) {
                 if (cartItem.getProduct().getId().equals(productId)) {
                     cartItem.setQuantity(cartItem.getQuantity() - 1);
                     if(cartItem.getQuantity() == 0){
-                        trashProductFromCart(cartItem.getProduct().getId());
+                        trashProductFromCart(cartID,cartItem.getProduct().getId());
+                        break;
                     }
+                    break;
+                    //wyjście z forEach
                 }
             }
-            cartRepository.save(cart1.get());
+            cartRepository.save(cart.get());
         }
     }
 
-    public void trashProductFromCart(Long productId) {
-        Optional<Cart> cart1 = cartRepository.findById(1L);
+    public void trashProductFromCart(Long cartID ,Long productId) {
+        Optional<Cart> cart = cartRepository.findById(cartID);
+        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
+        if (match) {
+            for (CartItem cartItem : cart.get().getCartItems()) {
+                if (cartItem.getProduct().getId().equals(productId)) {
+                        cart.get().deleteCartItem(cartItem);
+                }
+            }
+            cartRepository.save(cart.get());
+        }
     }
 
     public List<CartItem> getCartItems(Long cartId) {

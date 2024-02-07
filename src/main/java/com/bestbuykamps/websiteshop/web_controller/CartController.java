@@ -46,14 +46,14 @@ public class CartController {
         return "redirect:forward:/PRODUCT_ADDED.html";
     }
     @PostMapping("/remove")
-    public String removeProduct(@RequestParam Long productId) {
-        this.cartService.deleteProductFromCart(productId);
+    public String removeProduct(@RequestParam Long cartId, Long productId ) {
+        this.cartService.deleteProductFromCart(cartId,productId);
         logger.info("Product with ID {} removed from cart", productId);
         return "redirect:forward:/PRODUCT_REMOVED.html";
     }
     @PostMapping("/delete")
-    public String deleteProduct(@RequestParam Long productId) {
-        this.cartService.deleteProductFromCart(productId);
+    public String deleteProduct(@RequestParam Long cartId, Long productId) {
+        this.cartService.deleteProductFromCart(cartId,productId);
         logger.info("Product with ID {} deleted from cart", productId);
         return "redirect:forward:/PRODUCT_DELETE.html";
     }

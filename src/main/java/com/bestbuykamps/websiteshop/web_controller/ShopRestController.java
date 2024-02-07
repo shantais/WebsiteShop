@@ -39,4 +39,9 @@ public class ShopRestController {
     public List<CartItem> showCart(@RequestBody Long cartId) {
         return this.cartService.getCartItems(cartId);
     }
+
+    @RequestMapping(path = "/cart/totalPrice", method = RequestMethod.POST)
+    public Double getTotalPrice(@RequestBody Long cartId) {
+        return this.cartService.getTotalCartValue(cartId);
+    }
 }

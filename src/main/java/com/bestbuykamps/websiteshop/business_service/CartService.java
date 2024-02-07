@@ -84,8 +84,8 @@ public class CartService {
         }
     }
 
-    public void trashProductFromCart(Long cartID ,Long productId) {
-        Optional<Cart> cart = cartRepository.findById(cartID);
+    public void trashProductFromCart(Long cartId ,Long productId) {
+        Optional<Cart> cart = cartRepository.findById(cartId);
         boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {
             for (CartItem cartItem : cart.get().getCartItems()) {
@@ -100,4 +100,14 @@ public class CartService {
     public List<CartItem> getCartItems(Long cartId) {
         return this.cartRepository.findById(cartId).get().getCartItems();
     }
+
+    public double getTotalCartValue(Long cartId){
+        Optional<Cart> cart = cartRepository.findById(cartId);
+        double totalPrice=0;
+        for (CartItem cartItem : cart.get().getCartItems()) {
+            totalPrice+=(cartItem.getProduct().getPrice()*cartItem.getQuantity());
+        }
+        return totalPrice;
+    }
+
 }

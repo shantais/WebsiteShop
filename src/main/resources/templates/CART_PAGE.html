@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,37 +28,30 @@
           </div>
         </div>
         <div class="panel-body">
-          <div class="row">
-            <div class="col-xs-2"><img class="img-responsive" src="http://placehold.it/100x70"></div>
+          <!-- Tutaj generuj dynamicznie listę produktów z koszyka -->
+          <div th:each="cartItem : ${cartItems}" class="row">
+            <div class="col-xs-2"><img class="img-responsive" th:src="@{'http://placehold.it/100x70?id=' + ${cartItem.product.id}}" /></div>
             <div class="col-xs-4">
-              <h4 class="product-name"><strong>Przykładowy produkt</strong></h4><h4><small>Opis produktu(mozna to usunac)</small></h4>
+              <h4 class="product-name" th:text="${cartItem.product.name}"></h4>
+              <h4><small>Opis produktu(mozna to usunac)</small></h4>
             </div>
             <div class="col-xs-6">
               <div class="col-xs-6 text-right">
                 <h6><strong>ilosc <span class="text-muted">x</span></strong></h6>
               </div>
               <div class="col-xs-6">
+                <!-- Tutaj możesz dodać przyciski do zmiany ilości produktu w koszyku -->
                 <form th:action="@{/cart/products/add}" method="post">
-                  <input type="hidden" name="productId" value="1">
+                  <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
                   <button type="submit" class="btn btn-success btn-xs">
                     <span class="glyphicon glyphicon-plus"></span>
                   </button>
                 </form>
-                <form th:action="@{/cart/products/remove}" method="post">
-                  <input type="hidden" name="productId" value="1">
-                  <button type="submit" class="btn btn-danger btn-xs">
-                    <span class="glyphicon glyphicon-remove"></span>
-                  </button>
-                </form>
-                <form th:action="@{/cart/products/delete}" method="post">
-                  <input type="hidden" name="productId" value="1">
-                  <button type="submit" class="btn btn-warning btn-xs">
-                    <span class="glyphicon glyphicon-trash"></span>
-                  </button>
-                </form>
+                <!-- Analogicznie dla usuwania i usuwania produktu -->
               </div>
             </div>
           </div>
+          <!-- Koniec listy produktów z koszyka -->
           <hr>
         </div>
         <div class="panel-footer">

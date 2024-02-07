@@ -77,6 +77,7 @@ public class CartService {
                         break;
                     }
                     break;
+                    //wyjście z forEach
                 }
             }
             cartRepository.save(cart.get());

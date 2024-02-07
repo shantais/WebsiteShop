@@ -24,7 +24,7 @@ public class ShopRestController {
     public List<Product> getProducts() {
         return this.productService.getProducts();
     }
-
+    //TODO dodać przpięcie z ręki 1L na otrzymywany w przyszłości cartID
     @RequestMapping(path = "/products", method = RequestMethod.POST)
     public void addProduct(@RequestBody Product product) {
         this.productService.addProduct(product);
@@ -36,7 +36,7 @@ public class ShopRestController {
     }
 
     @RequestMapping(path = "/cart", method = RequestMethod.POST)
-    public List<CartItem> showCart(@RequestBody Cart cart) {
-        return this.cartService.getCartItems(cart.getId());
+    public List<CartItem> showCart(@RequestBody Long cartId) {
+        return this.cartService.getCartItems(cartId);
     }
 }

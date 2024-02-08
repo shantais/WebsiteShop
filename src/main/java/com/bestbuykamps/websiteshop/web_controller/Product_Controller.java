@@ -31,19 +31,19 @@ public class Product_Controller {
    @GetMapping("/cart")
     public String showCartPage(Model model) {
        model.addAttribute("cartItems", this.cartService.getCartItems(1L));
-       return "CART_PAGE.html";
+       return "CART_PAGE";
    }
-    @GetMapping("/images/{imageName}")
-    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
-
-        Resource imageResource = new ClassPathResource("static/images/" + imageName);
-
-        if (imageResource.exists() && imageResource.isReadable()) {
-            return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG)
-                    .body(imageResource);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @GetMapping("/images/{imageName}")
+//    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
+//
+//        Resource imageResource = new ClassPathResource("static/images/" + imageName);
+//
+//        if (imageResource.exists() && imageResource.isReadable()) {
+//            return ResponseEntity.ok()
+//                    .contentType(MediaType.IMAGE_JPEG)
+//                    .body(imageResource);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }

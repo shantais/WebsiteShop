@@ -28,8 +28,12 @@ public class Cart {
         cartItems.remove(cartItem);
     }
 
-    @OneToMany(mappedBy = "cart" , cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<CartItem> cartItems ;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems;
+
+    @OneToOne
+    @JoinColumn(name = "contact_details_id")
+    private ContactDetails contactDetails;
 
 
     public Cart() {

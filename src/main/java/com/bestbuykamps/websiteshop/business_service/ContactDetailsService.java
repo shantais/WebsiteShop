@@ -1,4 +1,4 @@
-package com.example.myapp.services;
+package com.bestbuykamps.websiteshop.business_service;
 
 import com.bestbuykamps.websiteshop.data_model.ContactDetails;
 import com.bestbuykamps.websiteshop.data_model.ContactDetailsRepository;

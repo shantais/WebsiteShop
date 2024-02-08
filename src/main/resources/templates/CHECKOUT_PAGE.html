@@ -27,6 +27,9 @@
                 <div class="panel-body">
                     <form th:action="@{/checkout}" method="post">
                         <div class="form-group">
+                            <input type="hidden" name="cartId" th:value="1" />
+                        </div>
+                        <div class="form-group">
                             <label for="name">First Name:</label>
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>

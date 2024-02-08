@@ -38,7 +38,8 @@ public class ContactDetails {
 
     @Column(name = "country", length = 20)
     private String country;
-
+    @OneToOne(mappedBy = "contactDetails")
+    private Cart cart;
 
     public Long getId() {
         return id;

@@ -5,9 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/checkout")
 public class CheckoutController {
-    @GetMapping("/checkout")
+    @GetMapping()
     public String checkoutPage() {
         return "CHECKOUT_PAGE";
     }
+
+
 }

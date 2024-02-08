@@ -20,6 +20,12 @@ public class CartController {
     private final CartService cartService;
     private Long productId;
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
+
+
     @GetMapping("/cart")
     public String showCartPage(Model model) {
         List<CartItem> cartItems = cartService.getCartItems(1L);
@@ -35,9 +41,6 @@ public class CartController {
         } else {
             return "redirect:/products";
         }
-    }
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
     }
     @PostMapping("/add")
     public String addProductToCart(@RequestParam Long productId) {

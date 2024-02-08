@@ -75,7 +75,14 @@
                         </div>
                         <hr>
                         <div class="text-center">
-                            <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='/confirmation'">Place Order</button>
+                            <button type="submit" class="btn btn-success btn-lg" onclick="redirectToPage()">Place Order</button>
+
+                            <script>
+                                function redirectToPage() {
+                                    // Tutaj podaj adres docelowej strony, na którą chcesz przekierować użytkownika
+                                    window.location.href = "/confirmation";
+                                }
+                            </script>
                         </div>
                     </form>
                 </div>

@@ -19,8 +19,8 @@ public class ContactDetailsController {
         this.cartService = cartService;
     }
 
-    @GetMapping("checkout")
-    public ContactDetails getContactDetails(@RequestBody ContactDetails contactDetails){
-        return contactDetails;
-    }
+//    @GetMapping("checkout")
+//    public ContactDetails getContactDetails(@RequestBody ContactDetails contactDetails){
+//        return contactDetails;
+//    }
 }

@@ -27,18 +27,24 @@ public class CheckoutController {
         return "CHECKOUT_PAGE";
     }
 
-    @PostMapping("")
-    public String processCheckout(@RequestBody ContactDetails contactDetails) {
+    @PostMapping()
+    public String processCheckout(@RequestParam String name,
+                                  @RequestParam String lastName,
+                                  @RequestParam String email,
+                                  @RequestParam String phone,
+                                  @RequestParam String address,
+                                  @RequestParam String country,
+                                  @RequestParam String city,
+                                  @RequestParam String zip) {
         logger.info("Received checkout request with following data:");
-        logger.info("Name: {}", contactDetails.getFirstName());
-        logger.info("Last Name: {}", contactDetails.getLastName());
-        logger.info("Email: {}", contactDetails.getEmail());
-        logger.info("Phone: {}", contactDetails.getPhoneNumber());
-        logger.info("Address: {}", contactDetails.getStreet());
-        logger.info("Country: {}", contactDetails.getCountry());
-        logger.info("City: {}", contactDetails.getCity());
-        logger.info("ZIP Code: {}", contactDetails.getPostalCode());
-        logger.info("Cart: {}", contactDetails.getCart().getId());
+        logger.info("Name: {}", name);
+        logger.info("Last Name: {}", lastName);
+        logger.info("Email: {}", email);
+        logger.info("Phone: {}", phone);
+        logger.info("Address: {}", address);
+        logger.info("Country: {}", country);
+        logger.info("City: {}", city);
+        logger.info("ZIP Code: {}", zip);
         return "CHECKOUT_PAGE";
     }
 

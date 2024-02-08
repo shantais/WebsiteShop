@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form th:action="@{/checkout}" method="post">
+                    <form th:action="@{/checkout}" method="post" onsubmit="return redirectToConfirmation()">
                         <div class="form-group">
                             <input type="hidden" name="cartId" th:value="1" />
                         </div>
@@ -75,14 +75,7 @@
                         </div>
                         <hr>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success btn-lg" onclick="redirectToPage()">Place Order</button>
-
-                            <script>
-                                function redirectToPage() {
-                                    // Tutaj podaj adres docelowej strony, na którą chcesz przekierować użytkownika
-                                    window.location.href = "/confirmation";
-                                }
-                            </script>
+                            <button type="submit" class="btn btn-success btn-lg" name="submit">Place Order</button>
                         </div>
                     </form>
                 </div>
@@ -90,5 +83,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    function redirectToConfirmation() {
+        // Nie robimy przekierowania za pomocą JavaScript
+        // Zostawiamy to do przetwarzania po stronie serwera
+        return true; // Zwracamy true, aby formularz został zatwierdzony
+    }
+</script>
 </body>
 </html>

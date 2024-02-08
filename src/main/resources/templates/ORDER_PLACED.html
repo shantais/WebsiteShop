@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <style>
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h5><span class="glyphicon glyphicon-ok"></span> Order Confirmation</h5>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-center">
+                        <img src="/images/orderPlaced.webp" alt="Order Confirmation" style="max-width: 100%;">
+                    </div>
+                    <h1 class="text-center">Thank you for your order!</h1>
+                    <hr>
+                    <div class="text-center">
+                        <h4>Your order number:</h4>
+                        <h2 th:text="${orderNumber}"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

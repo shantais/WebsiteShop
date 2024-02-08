@@ -49,7 +49,8 @@ public class CartController {
     public String removeProduct(@RequestParam Long cartId, Long productId ) {
         this.cartService.deleteProductFromCart(cartId,productId);
         logger.info("Product with ID {} removed from cart", productId);
-        return "redirect:forward:/PRODUCT_REMOVED.html";
+        return "redirect:/cart";
+        //return "redirect:forward:/PRODUCT_REMOVED.html";
     }
     @PostMapping("/delete")
     public String deleteProduct(@RequestParam Long cartId, Long productId) {

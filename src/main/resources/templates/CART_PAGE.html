@@ -30,7 +30,7 @@
         <div class="panel-body">
           <!-- Tutaj generuj dynamicznie listę produktów z koszyka -->
           <div th:each="cartItem : ${cartItems}" class="row">
-            <div class="col-xs-2"><img class="img-responsive" th:src="@{'http://placehold.it/100x70?id=' + ${cartItem.product.id}}" /></div>
+            <div class="col-xs-2"><img class="img-responsive" th:src="@{${cartItem.product.imagePath}}" /></div>
             <div class="col-xs-4">
               <h4 class="product-name" th:text="${cartItem.product.name}"></h4>
             </div>

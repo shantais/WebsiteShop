@@ -54,9 +54,10 @@ public class CartController {
     }
     @PostMapping("/delete")
     public String deleteProduct(@RequestParam Long cartId, Long productId) {
-        this.cartService.deleteProductFromCart(cartId,productId);
+        this.cartService.trashProductFromCart(cartId,productId);
         logger.info("Product with ID {} deleted from cart", productId);
-        return "redirect:forward:/PRODUCT_DELETE.html";
+        return "redirect:/cart";
+        //return "redirect:forward:/PRODUCT_DELETE.html";
     }
 
     // zwiększenie quantity dla obiektu z listy koszyka

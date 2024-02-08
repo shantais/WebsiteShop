@@ -91,6 +91,7 @@ public class CartService {
             for (CartItem cartItem : cart.get().getCartItems()) {
                 if (cartItem.getProduct().getId().equals(productId)) {
                         cart.get().deleteCartItem(cartItem);
+                        break;
                 }
             }
             cartRepository.save(cart.get());

@@ -24,7 +24,7 @@ public class CartController {
     public String showCartPage(Model model) {
         List<CartItem> cartItems = cartService.getCartItems(1L);
         model.addAttribute("cartItems", cartItems);
-        return "CART_PAGE.html";
+        return "CART_PAGE";
     }
 
     @GetMapping("/")

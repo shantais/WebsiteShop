@@ -2,6 +2,7 @@ package com.bestbuykamps.websiteshop.web_controller;
 
 import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.business_service.ProductService;
+import com.bestbuykamps.websiteshop.data_model.CartItem;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -19,7 +22,6 @@ public class Product_Controller {
 
     public Product_Controller(ProductService productService, CartService cartService) {
         this.productService = productService;
-
         this.cartService = cartService;
     }
 
@@ -31,6 +33,7 @@ public class Product_Controller {
    @GetMapping("/cart")
     public String showCartPage(Model model) {
        model.addAttribute("cartItems", this.cartService.getCartItems(1L));
+       model.addAttribute("totalCartValue", cartService.getTotalCartValue(1L));
        return "CART_PAGE";
    }
 

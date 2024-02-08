@@ -43,7 +43,15 @@ public class CartController {
     public String addProductToCart(@RequestParam Long productId) {
         cartService.addProductToCart(productId);
         logger.info("Product with ID {} added to cart", productId);
-        return "redirect:forward:/PRODUCT_ADDED.html";
+        return "redirect:/";
+//        return "redirect:forward:/PRODUCT_ADDED.html";
+    }
+    @PostMapping("/plus")
+    public String plusProductToCart(@RequestParam Long productId) {
+        cartService.addProductToCart(productId);
+        logger.info("Product with ID {} added to cart", productId);
+        return "redirect:/cart";
+//        return "redirect:forward:/PRODUCT_ADDED.html";
     }
     @PostMapping("/remove")
     public String removeProduct(@RequestParam Long cartId, Long productId ) {

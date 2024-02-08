@@ -33,6 +33,14 @@ public class Product_Controller {
        model.addAttribute("cartItems", this.cartService.getCartItems(1L));
        return "CART_PAGE";
    }
+
+    @PostMapping()
+    public String addProductToCart(@RequestParam Long productId) {
+        cartService.addProductToCart(productId);
+//        logger.info("Product with ID {} added to cart", productId);
+        return "PRODUCTS_PAGE";
+//        return "redirect:forward:/PRODUCT_ADDED.html";
+    }
 //    @GetMapping("/images/{imageName}")
 //    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
 //

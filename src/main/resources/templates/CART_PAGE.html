@@ -39,7 +39,7 @@
                 <h6><strong>ilość </strong><span class="text-muted" th:text="${cartItem.quantity}"></span></h6>
               </div>
               <div class="col-xs-6">
-                <form th:action="@{/cart/products/add}" method="post">
+                <form th:action="@{/cart/products/plus}" method="post">
                   <input type="hidden" name="cartId" th:value="${cartId}" />
                   <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
                   <button type="submit" class="btn btn-success btn-xs">

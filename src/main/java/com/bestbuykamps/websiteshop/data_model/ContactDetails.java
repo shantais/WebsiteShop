@@ -9,14 +9,35 @@ public class ContactDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "first_name", length = 50)
     private String firstName;
+
+    @Column(name = "last_name", length = 50)
     private String lastName;
+
+    @Column(name = "street", length = 300)
     private String street;
+
+    @Column(name = "house_number", length = 10)
     private String houseNumber;
+
+    @Column(name = "apartment_number", length = 10)
     private String apartmentNumber;
+
+    @Column(name = "postal_code", length = 6)
     private String postalCode;
+
+    @Column(name = "city", length = 30)
     private String city;
 
+    @Column(name = "phone_number", length = 9)
+    private String phoneNumber;
+
+    @Column(name = "email", length = 30)
+    private String email;
+
+    @Column(name = "country", length = 20)
+    private String country;
 
 
     public Long getId() {
@@ -83,6 +104,31 @@ public class ContactDetails {
         this.city = city;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+
+    }
+
     @Override
     public String toString() {
         return "ContactDetails{" +
@@ -94,6 +140,9 @@ public class ContactDetails {
                 ", apartmentNumber='" + apartmentNumber + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", city='" + city + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
                 '}';
     }
 }

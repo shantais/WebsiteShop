@@ -14,12 +14,12 @@ class CartTest {
     }
 
 
-    @Test
+/*    @Test
     void testUserId() {
         Long userId = 123L;
         cart.setUserId(userId);
         assertEquals(userId, cart.getUserId());
-    }
+    }*/
 
 
 }

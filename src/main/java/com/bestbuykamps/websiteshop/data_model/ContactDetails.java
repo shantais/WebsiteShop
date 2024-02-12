@@ -41,6 +41,9 @@ public class ContactDetails {
     @OneToOne(mappedBy = "contactDetails")
     private Cart cart;
 
+    @OneToOne(mappedBy = "contactDetails")
+    private User user;
+
     public Long getId() {
         return id;
     }

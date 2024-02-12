@@ -10,6 +10,9 @@ import java.util.Random;
 @Controller
 @RequestMapping("/")
 public class OrderConfirmationController {
+
+
+    //TODO: przerobić na redirect do strony głównej
     @GetMapping("/confirmation")
     public String showOrderConfirmation(Model model) {
         Random random = new Random();

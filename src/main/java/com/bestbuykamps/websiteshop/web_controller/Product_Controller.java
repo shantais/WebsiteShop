@@ -44,6 +44,12 @@ public class Product_Controller {
         return "PRODUCTS_PAGE";
 //        return "redirect:forward:/PRODUCT_ADDED.html";
     }
+
+    @GetMapping("/login")
+    public String moveToLoginPage(){
+        return "LOGIN_PAGE";
+    }
+
 //    @GetMapping("/images/{imageName}")
 //    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
 //

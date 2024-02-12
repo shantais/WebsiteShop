@@ -39,36 +39,10 @@ public class Cart {
     public Cart() {
     }
 
-    @Column(name = "user_id")
-    private Long userId;
-
 
     public Long getId() {
         return id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-//    public void  Map<Long, Integer> getCartItems() {
-//       // return cartItems;
-//    }
-//
-//    public  void setCartItems(Map<Long, Integer> cartItems) {
-//       // Cart.cartItems = cartItems;
-//    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", cartItems=" + cartItems +
-                ", userId=" + userId +
-                '}';
-    }
 }

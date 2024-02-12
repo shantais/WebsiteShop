@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class CartService {
         //jak istnieje to zwracamy koszyk X
 
         Optional<Cart> cart = cartRepository.findById(1L);
-        if(cart.isEmpty()){
+        if (cart.isEmpty()) {
             cartRepository.save(new Cart());
         }
         boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
@@ -63,7 +64,7 @@ public class CartService {
         // przy dodaniu sprawdzać czy w magazynie starczy produktów po dodaniu
     }
 
-    public void deleteProductFromCart(Long cartID ,Long productId) {
+    public void deleteProductFromCart(Long cartID, Long productId) {
         // odpytanie czy koszyk istnieje
         // nie istnieje - ogarnać wyjątek
         // istnieje - sprawdzić czy jest klucz w mapie o wartości productId
@@ -75,8 +76,8 @@ public class CartService {
             for (CartItem cartItem : cart.get().getCartItems()) {
                 if (cartItem.getProduct().getId().equals(productId)) {
                     cartItem.setQuantity(cartItem.getQuantity() - 1);
-                    if(cartItem.getQuantity() == 0){
-                        trashProductFromCart(cartID,cartItem.getProduct().getId());
+                    if (cartItem.getQuantity() == 0) {
+                        trashProductFromCart(cartID, cartItem.getProduct().getId());
                         break;
                     }
                     break;
@@ -87,14 +88,14 @@ public class CartService {
         }
     }
 
-    public void trashProductFromCart(Long cartId ,Long productId) {
+    public void trashProductFromCart(Long cartId, Long productId) {
         Optional<Cart> cart = cartRepository.findById(cartId);
         boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {
             for (CartItem cartItem : cart.get().getCartItems()) {
                 if (cartItem.getProduct().getId().equals(productId)) {
-                        cart.get().deleteCartItem(cartItem);
-                        break;
+                    cart.get().deleteCartItem(cartItem);
+                    break;
                 }
             }
             cartRepository.save(cart.get());
@@ -105,13 +106,14 @@ public class CartService {
         return this.cartRepository.findById(cartId).get().getCartItems();
     }
 
+
     public double getTotalCartValue(Long cartId){
         Optional<Cart> cart = cartRepository.findById(cartId);
-        double totalPrice=0;
+        double totalPrice = 0;
         for (CartItem cartItem : cart.get().getCartItems()) {
-            totalPrice+=(cartItem.getProduct().getPrice()*cartItem.getQuantity());
+            totalPrice += (cartItem.getProduct().getPrice() * cartItem.getQuantity());
         }
+
         return totalPrice;
     }
-
 }

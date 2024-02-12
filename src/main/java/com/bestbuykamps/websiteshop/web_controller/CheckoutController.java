@@ -6,7 +6,10 @@ import com.bestbuykamps.websiteshop.data_model.ContactDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Random;
 
 @Controller
 @RequestMapping("/checkout")
@@ -28,7 +31,7 @@ public class CheckoutController {
     }
 
     @PostMapping()
-    public String processCheckout(@RequestParam String name,
+    public String processCheckout(Model model ,@RequestParam String name,
                                   @RequestParam String lastName,
                                   @RequestParam String email,
                                   @RequestParam String phone,
@@ -45,7 +48,16 @@ public class CheckoutController {
         logger.info("Country: {}", country);
         logger.info("City: {}", city);
         logger.info("ZIP Code: {}", zip);
-        return "CHECKOUT_PAGE";
+
+        showOrderConfirmation(model);
+        return "ORDER_PlACED";
+    }
+
+
+    public void showOrderConfirmation(Model model) {
+        Random random = new Random();
+        int orderNumber = random.nextInt(1000000);
+        model.addAttribute("orderNumber", orderNumber);
     }
 
 }

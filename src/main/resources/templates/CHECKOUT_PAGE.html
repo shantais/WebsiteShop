@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form th:action="@{/checkout}" method="post" onsubmit="return redirectToConfirmation()">
+                    <form th:action="@{/checkout}" method="post" >
                         <div class="form-group">
                             <input type="hidden" name="cartId" th:value="1" />
                         </div>
@@ -84,12 +84,5 @@
     </div>
 </div>
 
-<script>
-    function redirectToConfirmation() {
-        // Nie robimy przekierowania za pomocą JavaScript
-        // Zostawiamy to do przetwarzania po stronie serwera
-        return true; // Zwracamy true, aby formularz został zatwierdzony
-    }
-</script>
 </body>
 </html>

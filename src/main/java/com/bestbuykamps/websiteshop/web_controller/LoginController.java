@@ -1,5 +1,7 @@
 package com.bestbuykamps.websiteshop.web_controller;
 
+import com.bestbuykamps.websiteshop.data_model.ContactDetails;
+import com.bestbuykamps.websiteshop.data_model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,6 @@ public class LoginController {
     @GetMapping("register")
     public String moveToRegisterPage(){
         return "REGISTER_PAGE";
-    }
-    @GetMapping("registerSuccess")
-    public String moveToRegisterSuccessPage(){
-        return "REGISTER_SUCCESS";
     }
 
     @PostMapping("register")
@@ -47,8 +45,10 @@ public class LoginController {
         logger.info("ZIP Code: {}", zip);
 
         //TODO: stworzenie instancji usera i zmapowanie danych na klasę User
+        User user = new User(username, password);
+        ContactDetails contactDetails = new ContactDetails();
 
-        return "REGISTRATION_COMLETE";
+        return "REGISTER_SUCCESS";
     }
 
 }

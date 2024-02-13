@@ -39,13 +39,14 @@ public class ContactDetails {
     @Column(name = "country", length = 20)
     private String country;
 
+    @OneToOne(mappedBy = "contactDetails")
+    private Cart cart;
 
     //konstruktor domyślny
     public ContactDetails() {
     }
 
     // gettery i settery
-
     public Long getId() {
         return id;
     }
@@ -130,7 +131,13 @@ public class ContactDetails {
         return country;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
 
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     public void setCountry(String country) {
         this.country = country;

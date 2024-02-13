@@ -7,17 +7,18 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long userId;
+    private Long userId;
+
     @Column(name = "username")
-    private  String username;
+    private String username;
+
     @Column(name = "password")
-    private  String password;
-
-
+    private String password;
 
     //konstruktor domyślny
     public User() {
     }
+
     // konstruktor 2argumentowy na potrzeby tworzenie logowania (Ania) - raczej do wymiany/usunięcia
     public User(String username, String password) {
         this.username = username;
@@ -25,6 +26,20 @@ public class User {
     }
 
     //gettery i settery
+    public Long getUserId() {
+        return userId;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                '}';
+    }
 
 }

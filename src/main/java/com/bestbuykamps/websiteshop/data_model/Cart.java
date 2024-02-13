@@ -15,12 +15,16 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems;
 
+    @OneToOne
+    @JoinColumn(name = "contact_details_id")
+    private ContactDetails contactDetails;
 
+    @Column(name = "user_id")
+    private Long userId;
 
     //konstruktor domyślny
     public Cart() {
     }
-
 
     // gettery i settery
     public List<CartItem> getCartItems() {
@@ -43,7 +47,13 @@ public class Cart {
         return id;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
 
 

@@ -12,7 +12,7 @@ import java.util.Random;
 public class OrderConfirmationController {
 
 
-    //TODO: przerobić na redirect do strony głównej
+    //TODO: sprawdzić czy potrzebne przerobić na redirect do strony głównej
     @GetMapping("/confirmation")
     public String showOrderConfirmation(Model model) {
         Random random = new Random();

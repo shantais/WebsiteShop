@@ -36,8 +36,7 @@ public class CartService {
 
         Optional<Cart> cart = cartRepository.findById(1L);
         if (cart.isEmpty()) {
-            Cart newCart = new Cart();
-            cartRepository.save(newCart);
+            cartRepository.save(new Cart());
         }
         boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {

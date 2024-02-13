@@ -30,6 +30,7 @@ public class Product_Controller {
         model.addAttribute("products", this.productService.getProducts());
         return "PRODUCTS_PAGE";
     }
+
    @GetMapping("/cart")
     public String showCartPage(Model model) {
        model.addAttribute("cartItems", this.cartService.getCartItems(1L));

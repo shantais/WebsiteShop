@@ -2,6 +2,9 @@ package com.bestbuykamps.websiteshop.web_controller;
 
 import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.data_model.CartItem;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,16 @@ public class CartController {
     }
 
 
+    //TODO: zdecydować gdzie pobieramy sesje HttpServletRequest request
+//    @GetMapping("/cart")
+//    public String showCartPage(Model model, HttpServletRequest request) {
+//        HttpSession session = request.getSession();
+//        String sessionId = session.getId();
+//        model.addAttribute("sessionId", sessionId);
+//        List<CartItem> cartItems = cartService.getCartItems(1L);
+//        model.addAttribute("cartItems", cartItems);
+//        return "CART_PAGE";
+//    }
     @GetMapping("/cart")
     public String showCartPage(Model model) {
         List<CartItem> cartItems = cartService.getCartItems(1L);

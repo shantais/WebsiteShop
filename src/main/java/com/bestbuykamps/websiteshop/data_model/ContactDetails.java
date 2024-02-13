@@ -36,6 +36,7 @@ public class ContactDetails {
     @Column(name = "email", length = 30)
     private String email;
 
+
     @Column(name = "country", length = 20)
     private String country;
 

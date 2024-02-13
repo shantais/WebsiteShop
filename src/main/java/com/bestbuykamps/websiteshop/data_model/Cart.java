@@ -36,11 +36,11 @@ public class Cart {
     }
 
     public void addCartItem(CartItem cartItem) {
-        cartItems.add(cartItem);
+        this.cartItems.add(cartItem);
     }
 
     public void deleteCartItem(CartItem cartItem) {
-        cartItems.remove(cartItem);
+        this.cartItems.remove(cartItem);
     }
 
     public Long getId() {

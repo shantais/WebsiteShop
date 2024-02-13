@@ -12,6 +12,17 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems;
+
+
+
+    //konstruktor domyślny
+    public Cart() {
+    }
+
+
+    // gettery i settery
     public List<CartItem> getCartItems() {
         return cartItems;
     }
@@ -28,21 +39,12 @@ public class Cart {
         cartItems.remove(cartItem);
     }
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> cartItems;
-
-    @OneToOne
-    @JoinColumn(name = "contact_details_id")
-    private ContactDetails contactDetails;
-
-
-    public Cart() {
-    }
-
-
     public Long getId() {
         return id;
     }
+
+
+
 
 
 }

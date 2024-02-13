@@ -13,17 +13,18 @@ public class User {
     @Column(name = "password")
     private  String password;
 
-    @OneToOne
-    @JoinColumn(name = "contact_details_id")
-    private ContactDetails contactDetails;
 
 
+    //konstruktor domyślny
+    public User() {
+    }
+    // konstruktor 2argumentowy na potrzeby tworzenie logowania (Ania) - raczej do wymiany/usunięcia
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public User() {
-    }
+    //gettery i settery
+
 
 }

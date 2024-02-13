@@ -6,24 +6,19 @@ import jakarta.persistence.*;
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(name = "username")
+    private  String username;
     public Order() {
     }
 
-    public Order(Long id, Cart cart, User user) {
-        this.id = id;
-    }
 
     // Gettery i Settery
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
 

@@ -45,7 +45,7 @@ public class Product_Controller {
         return "PRODUCTS_PAGE";
     }
 
-    //zmiana na sessionId
+
    @GetMapping("/cart")
     public String showCartPage(Model model , HttpServletRequest request) {
        model.addAttribute("cartItems", this.cartService.getCartItems(request.getRequestedSessionId()));

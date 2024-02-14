@@ -30,6 +30,12 @@ public class Cart {
     }
 
     // gettery i settery
+
+
+    public Long getId() {
+        return id;
+    }
+
     public List<CartItem> getCartItems() {
         return cartItems;
     }
@@ -38,16 +44,12 @@ public class Cart {
         this.cartItems = cartItems;
     }
 
-    public void addCartItem(CartItem cartItem) {
-        this.cartItems.add(cartItem);
+    public ContactDetails getContactDetails() {
+        return contactDetails;
     }
 
-    public void deleteCartItem(CartItem cartItem) {
-        this.cartItems.remove(cartItem);
-    }
-
-    public Long getId() {
-        return id;
+    public void setContactDetails(ContactDetails contactDetails) {
+        this.contactDetails = contactDetails;
     }
 
     public Long getUserId() {
@@ -64,5 +66,14 @@ public class Cart {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    // dodatkowe metody
+    public void addCartItem(CartItem cartItem) {
+        this.cartItems.add(cartItem);
+    }
+
+    public void deleteCartItem(CartItem cartItem) {
+        this.cartItems.remove(cartItem);
     }
 }

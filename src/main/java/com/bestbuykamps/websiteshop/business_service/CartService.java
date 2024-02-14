@@ -49,7 +49,6 @@ public class CartService {
                 logger.info("jestem w pętli");
                 logger.info(cartRepository.getById(cartId).getCartItems().toString());
                 if (cartItem.getProduct().getId().equals(productId)) {
-                    logger.info("QUANT UP");
                     logger.info(cartItem.toString());
                     cartItem.setQuantity(cartItem.getQuantity() + 1);
                     cartItemRepository.save(cartItem);
@@ -66,20 +65,20 @@ public class CartService {
         }
     }
 
-    public void deleteProductFromCart(Long cartID, Long productId) {
+    public void deleteProductFromCart(Long productId, Long cartId) {
         // odpytanie czy koszyk istnieje
         // nie istnieje - ogarnać wyjątek
         // istnieje - sprawdzić czy jest klucz w mapie o wartości productId
         // jeżeli q: równe 1 , usuwamy klucz+wartość
         //jeżeli q: > 1(2,3...X) zmniejszamy q: o 1
-        Optional<Cart> cart = cartRepository.findById(cartID);
+        Optional<Cart> cart = cartRepository.findById(cartId);
         boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {
             for (CartItem cartItem : cart.get().getCartItems()) {
                 if (cartItem.getProduct().getId().equals(productId)) {
                     cartItem.setQuantity(cartItem.getQuantity() - 1);
                     if (cartItem.getQuantity() == 0) {
-                        trashProductFromCart(cartID, cartItem.getProduct().getId());
+                        trashProductFromCart(cartId, cartItem.getProduct().getId());
                         break;
                     }
                     break;
@@ -90,7 +89,7 @@ public class CartService {
         }
     }
 
-    public void trashProductFromCart(Long cartId, Long productId) {
+    public void trashProductFromCart(Long productId, Long cartId) {
         Optional<Cart> cart = cartRepository.findById(cartId);
         boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {

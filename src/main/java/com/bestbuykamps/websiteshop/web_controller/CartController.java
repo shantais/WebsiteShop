@@ -39,6 +39,7 @@ public class CartController {
 //        model.addAttribute("cartItems", cartItems);
 //        return "CART_PAGE";
 //    }
+
 //    @GetMapping("/cart")
 //    public String showCartPage(Model model) {
 //        logger.info("wlazłem do showCartPage w CC");
@@ -47,15 +48,15 @@ public class CartController {
 //        return "CART_PAGE";
 //    }
 
-    @GetMapping("/")
-    public String showProductsPage() {
-        List<CartItem> cartItems = cartService.getCartItems(1L);
-        if (cartItems.isEmpty()) {
-            return "redirect:/cart";
-        } else {
-            return "redirect:/products";
-        }
-    }
+//    @GetMapping("/")
+//    public String showProductsPage() {
+//        List<CartItem> cartItems = cartService.getCartItems(1L);
+//        if (cartItems.isEmpty()) {
+//            return "redirect:/cart";
+//        } else {
+//            return "redirect:/products";
+//        }
+//    }
     @PostMapping("/add")
     public String addProductToCart(@RequestParam Long productId, HttpServletRequest request) {
         Long cartId = cartService.getCartId(request.getRequestedSessionId());
@@ -73,15 +74,17 @@ public class CartController {
 //        return "redirect:forward:/PRODUCT_ADDED.html";
     }
     @PostMapping("/remove")
-    public String removeProduct(@RequestParam Long cartId, Long productId ) {
-        this.cartService.deleteProductFromCart(cartId, productId);
+    public String removeProduct(@RequestParam Long productId , HttpServletRequest request) {
+        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+        this.cartService.deleteProductFromCart(productId, cartId);
         logger.info("Product with ID {} removed from cart", productId);
         return "redirect:/cart";
         //return "redirect:forward:/PRODUCT_REMOVED.html";
     }
     @PostMapping("/delete")
-    public String deleteProduct(@RequestParam Long cartId, Long productId) {
-        this.cartService.trashProductFromCart(cartId,productId);
+    public String deleteProduct(@RequestParam Long productId, HttpServletRequest request) {
+        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+        this.cartService.trashProductFromCart(productId, cartId);
         logger.info("Product with ID {} deleted from cart", productId);
         return "redirect:/cart";
         //return "redirect:forward:/PRODUCT_DELETE.html";

@@ -70,14 +70,14 @@
                   <button type="submit" class="btn btn-success btn-xs">
                     <span class="glyphicon glyphicon-plus"></span>
                   </button>
-
+                </form>
                 <form th:action="@{/cart/products/remove}" method="post">
                   <input type="hidden" name="cartId" th:value="1" />
                   <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
                   <button type="submit" class="btn btn-danger btn-xs">
                     <span class="glyphicon glyphicon-minus"></span>
                   </button>
-
+                </form>
                 <form th:action="@{/cart/products/delete}" method="post">
                   <input type="hidden" name="cartId" th:value="1" />
                   <input type="hidden" name="productId" th:value="${cartItem.product.id}" />

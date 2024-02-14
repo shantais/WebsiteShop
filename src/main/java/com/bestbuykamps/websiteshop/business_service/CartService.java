@@ -78,7 +78,6 @@ public class CartService {
         } else {
             logger.info("jestem w elsie");
             CartItem cartItem = new CartItem();
-//            logger.info(cartItem.toString());
             cartItem.setCart(cart.get());
             cartItem.setQuantity(1);
             cartItem.setProduct(productRepository.getById(productId));

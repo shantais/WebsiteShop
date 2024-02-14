@@ -3,6 +3,8 @@ package com.bestbuykamps.websiteshop.web_controller;
 import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.business_service.ProductService;
 import com.bestbuykamps.websiteshop.data_model.CartItem;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -25,8 +27,17 @@ public class Product_Controller {
         this.cartService = cartService;
     }
 
+//    @RequestMapping(method = RequestMethod.GET)
+//    public String getProducts(Model model){
+//        model.addAttribute("products", this.productService.getProducts());
+//        return "PRODUCTS_PAGE";
+//    }
+
     @RequestMapping(method = RequestMethod.GET)
-    public String getProducts(Model model){
+    public String getProducts(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String sessionId = session.getId();
+        model.addAttribute("sessionId", sessionId);
         model.addAttribute("products", this.productService.getProducts());
         return "PRODUCTS_PAGE";
     }

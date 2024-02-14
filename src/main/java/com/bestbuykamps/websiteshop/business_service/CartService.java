@@ -119,7 +119,7 @@ public class CartService {
     }
 
     public Long getCartId(String sessionId) {
-        logger.info("wlazłem do getCartId");
+        logger.info("wlazłem do getCartId, sessionId: {}", sessionId);
         Optional<Cart> cart = createCart(sessionId);
         logger.info("Current cart ID: {}", cart.get().getId().toString());
         return cart.get().getId();
@@ -152,6 +152,7 @@ public class CartService {
         cartItem.setCart(cartRepository.getById(cartId));
         cartItem.setQuantity(1);
         cartItem.setProduct(productRepository.getById(productId));
+        logger.info("Item ustawiony");
         logger.info(cartItem.toString());
         cartItemRepository.save(cartItem);
     }

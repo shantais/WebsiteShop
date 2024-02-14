@@ -48,7 +48,7 @@ public class Product_Controller {
    @GetMapping("/cart")
     public String showCartPage(Model model , HttpServletRequest request) {
        model.addAttribute("cartItems", this.cartService.getCartItems(request.getRequestedSessionId()));
-       model.addAttribute("totalCartValue", cartService.getTotalCartValue(1L));
+       model.addAttribute("totalCartValue", cartService.getTotalCartValue(request.getRequestedSessionId()));
        return "CART_PAGE";
    }
 

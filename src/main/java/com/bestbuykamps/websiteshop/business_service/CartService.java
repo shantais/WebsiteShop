@@ -144,8 +144,8 @@ public class CartService {
     }
 
 
-    public double getTotalCartValue(Long cartId){
-        Optional<Cart> cart = cartRepository.findById(cartId);
+    public double getTotalCartValue(String sessionId){
+        Optional<Cart> cart = cartRepository.findById(getCartIdBySessionId(sessionId));
         double totalPrice = 0;
         for (CartItem cartItem : cart.get().getCartItems()) {
             totalPrice += (cartItem.getProduct().getPrice() * cartItem.getQuantity());

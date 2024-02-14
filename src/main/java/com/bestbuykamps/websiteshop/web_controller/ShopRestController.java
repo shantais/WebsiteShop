@@ -42,7 +42,7 @@ public class ShopRestController {
     }
 
     @RequestMapping(path = "/cart/totalPrice", method = RequestMethod.POST)
-    public Double getTotalPrice(@RequestBody Long cartId) {
-        return this.cartService.getTotalCartValue(cartId);
+    public Double getTotalPrice(HttpServletRequest request) {
+        return this.cartService.getTotalCartValue(request.getRequestedSessionId());
     }
 }

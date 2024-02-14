@@ -24,6 +24,9 @@ public class CartItem {
     @JsonIgnore
     private Cart cart;
 
+    public CartItem() {
+    }
+
     public Long getId() {
         return id;
     }

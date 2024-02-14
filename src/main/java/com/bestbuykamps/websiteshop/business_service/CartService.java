@@ -4,9 +4,13 @@ import com.bestbuykamps.websiteshop.data_model.*;
 import com.bestbuykamps.websiteshop.data_model.CartItemRepository;
 import com.bestbuykamps.websiteshop.data_model.CartRepository;
 import com.bestbuykamps.websiteshop.data_model.ProductRepository;
+import com.bestbuykamps.websiteshop.web_controller.CheckoutController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -19,6 +23,8 @@ public class CartService {
 
     private final CartItemRepository cartItemRepository;
     private static final Logger log = LoggerFactory.getLogger(CartService.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(CheckoutController.class);
 
 
     public CartService(CartRepository cartRepository, ProductRepository productRepository, CartItemRepository cartItemRepository) {
@@ -35,24 +41,52 @@ public class CartService {
         //jak istnieje to zwracamy koszyk X
 
         Optional<Cart> cart = cartRepository.findById(1L);
+        logger.info("Cart: {}", cart);
         if (cart.isEmpty()) {
-            cartRepository.save(new Cart());
+            cart = Optional.of(new Cart());
+            cartRepository.save(cart.get());
+            cartRepository.flush();
+            logger.info(cart.toString());
         }
-        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
-        if (match) {
-            for (CartItem cartItem : cart.get().getCartItems()) {
+
+//        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
+//        boolean match = false;
+        boolean match = cartRepository.getById(1L).getCartItems() == null;
+        logger.info(String.valueOf(match));
+        if (!match) {
+            logger.info("Jestem w ifie");
+            for (CartItem cartItem : cartRepository.getById(1L).getCartItems()) {
+                logger.info("jestem w pętli");
+                logger.info(cartRepository.getById(1L).getCartItems().toString());
                 if (cartItem.getProduct().getId().equals(productId)) {
+                    logger.info("QUANT UP");
+                    logger.info(cartItem.toString());
                     cartItem.setQuantity(cartItem.getQuantity() + 1);
+                    cartItemRepository.save(cartItem);
+                    logger.info(cartItem.getQuantity().toString());
                 }
             }
-            cartRepository.save(cart.get());
+            if(!cartRepository.getById(1L).getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId))) {
+                logger.info("dodałem któryś produkt z q:1");
+                CartItem cartItem = new CartItem();
+                cartItem.setCart(cart.get());
+                cartItem.setQuantity(1);
+                cartItem.setProduct(productRepository.getById(productId));
+                logger.info(cartItem.toString());
+                cartItemRepository.save(cartItem);
+            }
         } else {
+            logger.info("jestem w elsie");
             CartItem cartItem = new CartItem();
             cartItem.setCart(cart.get());
             cartItem.setQuantity(1);
             cartItem.setProduct(productRepository.getById(productId));
-            cart.get().addCartItem(cartItem);
-            cartRepository.save(cart.get());
+            logger.info(cartItem.toString());
+            cartItemRepository.save(cartItem);
+//            cart.get().addCartItem(cartItem);
+//            cartRepository.getById(1L).addCartItem(cartItem);
+//            logger.info(cart.get().toString());
+//            cartRepository.save(cart.get());
         }
 
 

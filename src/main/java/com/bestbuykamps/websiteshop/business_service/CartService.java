@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,16 +35,18 @@ public class CartService {
     }
 
 
-    public void addProductToCart(Long productId) {
-        log.info("Adding product with ID {} to the cart.", productId);
+    public void addProductToCart( String sessionId,Long productId) {
+        log.info("Adding product with ID {} to the cart.", productId , "from carService");
         //odpytanie czy koszyk istnieje
         //jak nie istnieje to tworzymy koszyk i zwracamy koszyk X
         //jak istnieje to zwracamy koszyk X
 
-        Optional<Cart> cart = cartRepository.findById(1L);
+        //getCartIdBySessionId(sessionId)
+        Optional<Cart> cart = cartRepository.findById(getCartIdBySessionId(sessionId));
         logger.info("Cart: {}", cart);
         if (cart.isEmpty()) {
             cart = Optional.of(new Cart());
+            cart.get().setSessionId(sessionId);
             cartRepository.save(cart.get());
             cartRepository.flush();
             logger.info(cart.toString());
@@ -51,13 +54,13 @@ public class CartService {
 
 //        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
 //        boolean match = false;
-        boolean match = cartRepository.getById(1L).getCartItems() == null;
+        boolean match = cartRepository.getById(getCartIdBySessionId(sessionId)).getCartItems() == null;
         logger.info(String.valueOf(match));
         if (!match) {
             logger.info("Jestem w ifie");
-            for (CartItem cartItem : cartRepository.getById(1L).getCartItems()) {
+            for (CartItem cartItem : cartRepository.getById(getCartIdBySessionId(sessionId)).getCartItems()) {
                 logger.info("jestem w pętli");
-                logger.info(cartRepository.getById(1L).getCartItems().toString());
+                logger.info(cartRepository.getById(getCartIdBySessionId(sessionId)).getCartItems().toString());
                 if (cartItem.getProduct().getId().equals(productId)) {
                     logger.info("QUANT UP");
                     logger.info(cartItem.toString());
@@ -66,7 +69,7 @@ public class CartService {
                     logger.info(cartItem.getQuantity().toString());
                 }
             }
-            if(!cartRepository.getById(1L).getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId))) {
+            if(!cartRepository.getById(getCartIdBySessionId(sessionId)).getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId))) {
                 logger.info("dodałem któryś produkt z q:1");
                 CartItem cartItem = new CartItem();
                 cartItem.setCart(cart.get());
@@ -98,20 +101,20 @@ public class CartService {
         // przy dodaniu sprawdzać czy w magazynie starczy produktów po dodaniu
     }
 
-    public void deleteProductFromCart(Long cartID, Long productId) {
+    public void deleteProductFromCart(String sessionId, Long productId) {
         // odpytanie czy koszyk istnieje
         // nie istnieje - ogarnać wyjątek
         // istnieje - sprawdzić czy jest klucz w mapie o wartości productId
         // jeżeli q: równe 1 , usuwamy klucz+wartość
         //jeżeli q: > 1(2,3...X) zmniejszamy q: o 1
-        Optional<Cart> cart = cartRepository.findById(cartID);
+        Optional<Cart> cart = cartRepository.findById(getCartIdBySessionId(sessionId));
         boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {
             for (CartItem cartItem : cart.get().getCartItems()) {
                 if (cartItem.getProduct().getId().equals(productId)) {
                     cartItem.setQuantity(cartItem.getQuantity() - 1);
                     if (cartItem.getQuantity() == 0) {
-                        trashProductFromCart(cartID, cartItem.getProduct().getId());
+                        trashProductFromCart(sessionId, cartItem.getProduct().getId());
                         break;
                     }
                     break;
@@ -122,8 +125,8 @@ public class CartService {
         }
     }
 
-    public void trashProductFromCart(Long cartId, Long productId) {
-        Optional<Cart> cart = cartRepository.findById(cartId);
+    public void trashProductFromCart(String sessionId, Long productId) {
+        Optional<Cart> cart = cartRepository.findById(getCartIdBySessionId(sessionId));
         boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
         if (match) {
             for (CartItem cartItem : cart.get().getCartItems()) {
@@ -136,13 +139,13 @@ public class CartService {
         }
     }
 
-    public List<CartItem> getCartItems(Long cartId) {
-        return this.cartRepository.findById(cartId).get().getCartItems();
+    public List<CartItem> getCartItems(String sessionId) {
+        return this.cartRepository.findById(getCartIdBySessionId(sessionId)).get().getCartItems();
     }
 
 
-    public double getTotalCartValue(Long cartId){
-        Optional<Cart> cart = cartRepository.findById(cartId);
+    public double getTotalCartValue(String sessionId){
+        Optional<Cart> cart = cartRepository.findById(getCartIdBySessionId(sessionId));
         double totalPrice = 0;
         for (CartItem cartItem : cart.get().getCartItems()) {
             totalPrice += (cartItem.getProduct().getPrice() * cartItem.getQuantity());
@@ -150,4 +153,16 @@ public class CartService {
 
         return totalPrice;
     }
+
+
+    public Long getCartIdBySessionId(String sessionId){
+        List<Cart> carts = cartRepository.findAll();
+        for (Cart cart: carts ) {
+            if(cart.getSessionId().equals(sessionId)){
+                return cart.getId();
+            }
+        }
+        return -1L;
+    }
+
 }

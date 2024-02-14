@@ -150,4 +150,28 @@ public class CartService {
 
         return totalPrice;
     }
+
+    public Long createCart(String sessionId) {
+        Optional<Cart> cart = findCartIdBySessionId(sessionId);
+        logger.info("wlazłem do createCart");
+        if (cart.isEmpty()) {
+            cart = Optional.of(new Cart());
+            cart.get().setSessionId(sessionId);
+            cartRepository.save(cart.get());
+            cartRepository.flush();
+//            logger.info(cart.toString());
+        }
+        logger.info("Current cart ID: {}", cart.get().getId().toString());
+        return cart.get().getId();
+    }
+
+    private Optional<Cart> findCartIdBySessionId(String sessionId) {
+        boolean isCartFound = cartRepository.findAll().stream().anyMatch(cart -> cart.getSessionId().equals(sessionId));
+        if(isCartFound){
+            logger.info(String.valueOf(Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get())));
+            return Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get());
+        }
+        logger.info("jestem pusty");
+        return Optional.empty();
+    }
 }

@@ -22,6 +22,9 @@ public class Cart {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "session_id")
+    private String sessionId;
+
     //konstruktor domyślny
     public Cart() {
     }
@@ -55,6 +58,11 @@ public class Cart {
         this.userId = userId;
     }
 
+    public String getSessionId() {
+        return sessionId;
+    }
 
-
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 }

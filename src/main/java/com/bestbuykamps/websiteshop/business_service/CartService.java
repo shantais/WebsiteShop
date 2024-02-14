@@ -41,17 +41,6 @@ public class CartService {
         //jak nie istnieje to tworzymy koszyk i zwracamy koszyk X
         //jak istnieje to zwracamy koszyk X
 
-//        Optional<Cart> cart = cartRepository.findById(1L);
-//        logger.info("Cart: {}", cart);
-//        if (cart.isEmpty()) {
-//            cart = Optional.of(new Cart());
-//            cartRepository.save(cart.get());
-//            cartRepository.flush();
-//            logger.info(cart.toString());
-//        }
-//        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
-//        boolean match = false;
-
         boolean match = cartRepository.getById(cartId).getCartItems() == null;
         logger.info(String.valueOf(match));
         if (!match) {
@@ -67,36 +56,14 @@ public class CartService {
                     logger.info(cartItem.getQuantity().toString());
                 }
             }
-            if(!cartRepository.getById(1L).getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId))) {
+            if(!cartRepository.getById(cartId).getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId))) {
                 logger.info("dodałem któryś produkt z q:1");
-                CartItem cartItem = new CartItem();
-                cartItem.setCart(cartRepository.getById(cartId));
-                cartItem.setQuantity(1);
-                cartItem.setProduct(productRepository.getById(productId));
-                logger.info(cartItem.toString());
-                cartItemRepository.save(cartItem);
+                addCartItem(productId, cartId);
             }
         } else {
             logger.info("jestem w elsie");
-            CartItem cartItem = new CartItem();
-            cartItem.setCart(cartRepository.getById(cartId));
-            cartItem.setQuantity(1);
-            cartItem.setProduct(productRepository.getById(productId));
-            logger.info(cartItem.toString());
-            cartItemRepository.save(cartItem);
-//            cart.get().addCartItem(cartItem);
-//            cartRepository.getById(1L).addCartItem(cartItem);
-//            logger.info(cart.get().toString());
-//            cartRepository.save(cart.get());
+            addCartItem(productId, cartId);
         }
-
-
-        // do zrobienia - dodać cart map do carta
-        // sprawdzić czy jest klucz o wartości productID
-        // jest , zwiększyć wartość o 1
-        // nie ma , dodać nowy klucz i ustawić wartość na 1
-
-        // przy dodaniu sprawdzać czy w magazynie starczy produktów po dodaniu
     }
 
     public void deleteProductFromCart(Long cartID, Long productId) {
@@ -179,5 +146,14 @@ public class CartService {
         }
         logger.info("jestem pusty");
         return Optional.empty();
+    }
+
+    private void addCartItem(Long productId, Long cartId){
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cartRepository.getById(cartId));
+        cartItem.setQuantity(1);
+        cartItem.setProduct(productRepository.getById(productId));
+        logger.info(cartItem.toString());
+        cartItemRepository.save(cartItem);
     }
 }

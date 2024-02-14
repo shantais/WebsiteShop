@@ -49,15 +49,19 @@ public class Product_Controller {
     }
 
    @GetMapping("/cart")
-    public String showCartPage(Model model) {
-       model.addAttribute("cartItems", this.cartService.getCartItems(1L));
-       model.addAttribute("totalCartValue", cartService.getTotalCartValue(1L));
+    public String showCartPage(Model model, HttpServletRequest request) {
+       logger.info("wlazłem do showCartPage w PC");
+       Long cartId = cartService.getCartId(request.getRequestedSessionId());
+       logger.info("cart Id: {}", cartId);
+       model.addAttribute("cartItems", this.cartService.getCartItems(cartId));
+       model.addAttribute("totalCartValue", this.cartService.getTotalCartValue(cartId));
        return "CART_PAGE";
    }
 
     @PostMapping()
-    public String addProductToCart(@RequestParam Long productId) {
-        cartService.addProductToCart(productId);
+    public String addProductToCart(@RequestParam Long productId, HttpServletRequest request) {
+        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+        cartService.addProductToCart(productId, cartId);
 //        logger.info("Product with ID {} added to cart", productId);
         return "PRODUCTS_PAGE";
 //        return "redirect:forward:/PRODUCT_ADDED.html";

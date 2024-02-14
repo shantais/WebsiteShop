@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,30 +35,30 @@ public class CartService {
     }
 
 
-    public void addProductToCart(Long productId) {
+    public void addProductToCart(Long productId, Long cartId) {
         log.info("Adding product with ID {} to the cart.", productId);
         //odpytanie czy koszyk istnieje
         //jak nie istnieje to tworzymy koszyk i zwracamy koszyk X
         //jak istnieje to zwracamy koszyk X
 
-        Optional<Cart> cart = cartRepository.findById(1L);
-        logger.info("Cart: {}", cart);
-        if (cart.isEmpty()) {
-            cart = Optional.of(new Cart());
-            cartRepository.save(cart.get());
-            cartRepository.flush();
-            logger.info(cart.toString());
-        }
-
+//        Optional<Cart> cart = cartRepository.findById(1L);
+//        logger.info("Cart: {}", cart);
+//        if (cart.isEmpty()) {
+//            cart = Optional.of(new Cart());
+//            cartRepository.save(cart.get());
+//            cartRepository.flush();
+//            logger.info(cart.toString());
+//        }
 //        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
 //        boolean match = false;
-        boolean match = cartRepository.getById(1L).getCartItems() == null;
+
+        boolean match = cartRepository.getById(cartId).getCartItems() == null;
         logger.info(String.valueOf(match));
         if (!match) {
             logger.info("Jestem w ifie");
-            for (CartItem cartItem : cartRepository.getById(1L).getCartItems()) {
+            for (CartItem cartItem : cartRepository.getById(cartId).getCartItems()) {
                 logger.info("jestem w pętli");
-                logger.info(cartRepository.getById(1L).getCartItems().toString());
+                logger.info(cartRepository.getById(cartId).getCartItems().toString());
                 if (cartItem.getProduct().getId().equals(productId)) {
                     logger.info("QUANT UP");
                     logger.info(cartItem.toString());
@@ -69,7 +70,7 @@ public class CartService {
             if(!cartRepository.getById(1L).getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId))) {
                 logger.info("dodałem któryś produkt z q:1");
                 CartItem cartItem = new CartItem();
-                cartItem.setCart(cart.get());
+                cartItem.setCart(cartRepository.getById(cartId));
                 cartItem.setQuantity(1);
                 cartItem.setProduct(productRepository.getById(productId));
                 logger.info(cartItem.toString());
@@ -78,7 +79,7 @@ public class CartService {
         } else {
             logger.info("jestem w elsie");
             CartItem cartItem = new CartItem();
-            cartItem.setCart(cart.get());
+            cartItem.setCart(cartRepository.getById(cartId));
             cartItem.setQuantity(1);
             cartItem.setProduct(productRepository.getById(productId));
             logger.info(cartItem.toString());
@@ -151,18 +152,23 @@ public class CartService {
         return totalPrice;
     }
 
-    public Long createCart(String sessionId) {
+    public Long getCartId(String sessionId) {
+        logger.info("wlazłem do getCartId");
+        Optional<Cart> cart = createCart(sessionId);
+        logger.info("Current cart ID: {}", cart.get().getId().toString());
+        return cart.get().getId();
+    }
+
+    public Optional<Cart> createCart (String sessionId){
         Optional<Cart> cart = findCartIdBySessionId(sessionId);
-        logger.info("wlazłem do createCart");
         if (cart.isEmpty()) {
             cart = Optional.of(new Cart());
             cart.get().setSessionId(sessionId);
+            cart.get().setCartItems(new ArrayList<>());
             cartRepository.save(cart.get());
             cartRepository.flush();
-//            logger.info(cart.toString());
         }
-        logger.info("Current cart ID: {}", cart.get().getId().toString());
-        return cart.get().getId();
+        return cart;
     }
 
     private Optional<Cart> findCartIdBySessionId(String sessionId) {

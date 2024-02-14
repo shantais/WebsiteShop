@@ -39,12 +39,13 @@ public class CartController {
 //        model.addAttribute("cartItems", cartItems);
 //        return "CART_PAGE";
 //    }
-    @GetMapping("/cart")
-    public String showCartPage(Model model) {
-        List<CartItem> cartItems = cartService.getCartItems(1L);
-        model.addAttribute("cartItems", cartItems);
-        return "CART_PAGE";
-    }
+//    @GetMapping("/cart")
+//    public String showCartPage(Model model) {
+//        logger.info("wlazłem do showCartPage w CC");
+//        List<CartItem> cartItems = cartService.getCartItems(1L);
+//        model.addAttribute("cartItems", cartItems);
+//        return "CART_PAGE";
+//    }
 
     @GetMapping("/")
     public String showProductsPage() {
@@ -56,22 +57,24 @@ public class CartController {
         }
     }
     @PostMapping("/add")
-    public String addProductToCart(@RequestParam Long productId) {
-        cartService.addProductToCart(productId);
+    public String addProductToCart(@RequestParam Long productId, HttpServletRequest request) {
+        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+        cartService.addProductToCart(productId, cartId);
         logger.info("Product with ID {} added to cart", productId);
         return "redirect:forward:/";
 //        return "redirect:forward:/PRODUCT_ADDED.html";
     }
     @PostMapping("/plus")
-    public String plusProductToCart(@RequestParam Long productId) {
-        cartService.addProductToCart(productId);
+    public String plusProductToCart(@RequestParam Long productId, HttpServletRequest request) {
+        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+        cartService.addProductToCart(productId, cartId);
         logger.info("Product with ID {} added to cart", productId);
         return "redirect:/cart";
 //        return "redirect:forward:/PRODUCT_ADDED.html";
     }
     @PostMapping("/remove")
     public String removeProduct(@RequestParam Long cartId, Long productId ) {
-        this.cartService.deleteProductFromCart(cartId,productId);
+        this.cartService.deleteProductFromCart(cartId, productId);
         logger.info("Product with ID {} removed from cart", productId);
         return "redirect:/cart";
         //return "redirect:forward:/PRODUCT_REMOVED.html";

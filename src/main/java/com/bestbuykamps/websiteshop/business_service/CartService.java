@@ -157,7 +157,7 @@ public class CartService {
 
     public Long getCartIdBySessionId(String sessionId){
         List<Cart> carts = cartRepository.findAll();
-        for (Cart cart: carts ) {
+        for (Cart cart: carts) {
             if(cart.getSessionId().equals(sessionId)){
                 return cart.getId();
             }

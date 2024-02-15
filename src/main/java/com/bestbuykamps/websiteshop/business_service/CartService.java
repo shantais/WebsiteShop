@@ -44,13 +44,13 @@ public class CartService {
         //getCartIdBySessionId(sessionId)
         Optional<Cart> cart = cartRepository.findById(getCartIdBySessionId(sessionId));
         logger.info("Cart: {}", cart);
-        if (cart.isEmpty()) {
-            cart = Optional.of(new Cart());
-            cart.get().setSessionId(sessionId);
-            cartRepository.save(cart.get());
-            cartRepository.flush();
-            logger.info(cart.toString());
-        }
+//        if (cart.isEmpty()) {
+//            cart = Optional.of(new Cart());
+//            cart.get().setSessionId(sessionId);
+//            cartRepository.save(cart.get());
+//            cartRepository.flush();
+//            logger.info(cart.toString());
+//        }
 
 //        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
 //        boolean match = false;
@@ -163,6 +163,42 @@ public class CartService {
             }
         }
         return -1L;
+    }
+
+    public Long getCartId(String sessionId) {
+        logger.info("wlazłem do getCartId, sessionId: {}", sessionId);
+        Optional<Cart> cart = createCart(sessionId);
+        logger.info("Current cart ID: {}", cart.get().getId().toString());
+        return cart.get().getId();
+    }
+
+    public Optional<Cart> createCart (String sessionId){
+        Optional<Cart> cart = findCartBySessionId(sessionId);
+        if (cart.isEmpty()) {
+            cart = Optional.of(new Cart());
+            cart.get().setSessionId(sessionId);
+            cart.get().setCartItems(new ArrayList<>());
+            cartRepository.save(cart.get());
+            cartRepository.flush();
+        }
+        return cart;
+    }
+
+    private Optional<Cart> findCartBySessionId(String sessionId) {
+        boolean isCartFound = cartRepository.findAll().stream().anyMatch(cart -> cart.getSessionId().equals(sessionId));
+        if(isCartFound){
+            List<Cart> carts = cartRepository.findAll();
+            for (Cart cart: carts ) {
+                if(cart.getSessionId().equals(sessionId)){
+                    return Optional.of(cart);
+                }
+            }
+//            return -1L;
+//            logger.info(String.valueOf(Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get())));
+//            return Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get());
+        }
+        logger.info("jestem pusty");
+        return Optional.empty();
     }
 
 }

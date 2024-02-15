@@ -41,13 +41,15 @@ public class Product_Controller {
         String sessionId = session.getId();
         model.addAttribute("sessionId", sessionId);
         model.addAttribute("products", this.productService.getProducts());
-
+        cartService.createCart(sessionId);
         return "PRODUCTS_PAGE";
     }
 
 
    @GetMapping("/cart")
     public String showCartPage(Model model , HttpServletRequest request) {
+       Long cartId = cartService.getCartId(request.getRequestedSessionId());
+
        model.addAttribute("cartItems", this.cartService.getCartItems(request.getRequestedSessionId()));
        model.addAttribute("totalCartValue", cartService.getTotalCartValue(request.getRequestedSessionId()));
        return "CART_PAGE";

@@ -140,8 +140,14 @@ public class CartService {
     private Optional<Cart> findCartIdBySessionId(String sessionId) {
         boolean isCartFound = cartRepository.findAll().stream().anyMatch(cart -> cart.getSessionId().equals(sessionId));
         if(isCartFound){
-            logger.info(String.valueOf(Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get())));
-            return Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get());
+            List<Cart> carts = cartRepository.findAll();
+            for (Cart cart: carts ) {
+                if(cart.getSessionId().equals(sessionId)){
+                    return Optional.of(cart);
+                }
+            }
+//            logger.info(String.valueOf(Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get())));
+//            return Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get());
         }
         logger.info("jestem pusty");
         return Optional.empty();

@@ -50,28 +50,33 @@
               <h4 class="product-name" th:text="${cartItem.product.name}"></h4>
             </div>
             <div class="col-xs-6">
-              <div class="col-xs-6 text-right">
-                <h6><strong>x</strong><span class="text-muted" th:text="${cartItem.quantity}"></span></h6>
-              </div>
-              <div class="col-xs-6">
-                <form th:action="@{/cart/products/plus}" method="post">
-                  <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
-                  <button type="submit" class="btn btn-success btn-xs">
-                    <span class="glyphicon glyphicon-plus"></span>
-                  </button>
-                </form>
-                <form th:action="@{/cart/products/remove}" method="post">
-                  <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
-                  <button type="submit" class="btn btn-danger btn-xs">
-                    <span class="glyphicon glyphicon-minus"></span>
-                  </button>
-                </form>
-                <form th:action="@{/cart/products/delete}" method="post">
-                  <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
-                  <button type="submit" class="btn btn-danger btn-xs">
-                    <span class="glyphicon glyphicon-trash"></span>
-                  </button>
-                </form>
+              <div class="row">
+                <div class="col-xs-4 text-right">
+                  <h6><strong>x</strong><span class="text-muted" th:text="${cartItem.quantity}"></span></h6>
+                </div>
+                <div class="col-xs-8">
+                  <form th:action="@{/cart/products/plus}" method="post" style="display: inline;">
+                    <input type="hidden" name="cartId" th:value="${cartId}" />
+                    <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
+                    <button type="submit" class="btn btn-success btn-xs">
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                  </form>
+                  <form th:action="@{/cart/products/remove}" method="post" style="display: inline;">
+                    <input type="hidden" name="cartId" th:value="${cartId}" />
+                    <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
+                    <button type="submit" class="btn btn-danger btn-xs">
+                      <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                  </form>
+                  <form th:action="@{/cart/products/delete}" method="post" style="display: inline;">
+                    <input type="hidden" name="cartId" th:value="${cartId}" />
+                    <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
+                    <button type="submit" class="btn btn-danger btn-xs">
+                      <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 package com.bestbuykamps.websiteshop.business_service;
 
 import com.bestbuykamps.websiteshop.data_model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class OrdersService {
     private final OrderRepository orderRepository;
 
     private final CartService cartService;
-
+    @Autowired
     public OrdersService(CartRepository cartRepository, UserRepository userRepository, OrderRepository orderRepository, CartService cartService) {
         this.cartRepository = cartRepository;
         this.userRepository = userRepository;

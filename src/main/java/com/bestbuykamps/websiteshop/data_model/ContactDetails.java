@@ -40,8 +40,19 @@ public class ContactDetails {
     @Column(name = "country", length = 20)
     private String country;
 
+    @Column(name = "cart_id")
+    private Long cartId;
+
     @OneToOne(mappedBy = "contactDetails")
+    @JoinColumn(name = "cart_id")
     private Cart cart;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @OneToOne(mappedBy = "contactDetails")
+    @JoinColumn(name = "user_id")
+    private User user;
 
     //konstruktor domyślny
     public ContactDetails() {
@@ -143,6 +154,30 @@ public class ContactDetails {
     public void setCountry(String country) {
         this.country = country;
 
+    }
+
+    public Long getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

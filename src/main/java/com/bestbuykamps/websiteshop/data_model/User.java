@@ -15,6 +15,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @OneToOne
+    @JoinColumn(name = "contact_details_id")
+    private ContactDetails contactDetails;
+
+
     //konstruktor domyślny
     public User() {
     }

@@ -22,11 +22,34 @@ public class Cart {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "session_id")
+    private String sessionId;
+
+
     //konstruktor domyślny
     public Cart() {
     }
 
     // gettery i settery
+
+
+    public ContactDetails getContactDetails() {
+        return contactDetails;
+    }
+
+    public void setContactDetails(ContactDetails contactDetails) {
+        this.contactDetails = contactDetails;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
     public List<CartItem> getCartItems() {
         return cartItems;
     }

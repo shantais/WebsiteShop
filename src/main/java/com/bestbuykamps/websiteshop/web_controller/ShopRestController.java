@@ -5,8 +5,10 @@ import com.bestbuykamps.websiteshop.business_service.ProductService;
 import com.bestbuykamps.websiteshop.data_model.Cart;
 import com.bestbuykamps.websiteshop.data_model.CartItem;
 import com.bestbuykamps.websiteshop.data_model.Product;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -36,12 +38,12 @@ public class ShopRestController {
     }
 
     @RequestMapping(path = "/cart", method = RequestMethod.POST)
-    public List<CartItem> showCart(@RequestBody Long cartId) {
-        return this.cartService.getCartItems(cartId);
+    public List<CartItem> showCart(@RequestBody Long cartId , HttpServletRequest request) {
+        return this.cartService.getCartItems(request.getRequestedSessionId());
     }
 
     @RequestMapping(path = "/cart/totalPrice", method = RequestMethod.POST)
-    public Double getTotalPrice(@RequestBody Long cartId) {
-        return this.cartService.getTotalCartValue(cartId);
+    public BigDecimal getTotalPrice(HttpServletRequest request) {
+        return this.cartService.getTotalCartValue(request.getRequestedSessionId());
     }
 }

@@ -15,8 +15,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "contact_details_id", insertable = false, updatable = false)
+    private Long contactDetailsId;
+
     @OneToOne
-    @JoinColumn(name = "contact_details_id")
+    @JoinColumn(name = "contact_details_id", referencedColumnName = "id")
     private ContactDetails contactDetails;
 
 

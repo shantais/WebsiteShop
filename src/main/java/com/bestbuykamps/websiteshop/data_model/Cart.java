@@ -79,5 +79,14 @@ public class Cart {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", cartItems=" + cartItems +
+                ", contactDetails=" + contactDetails +
+                ", userId=" + userId +
+                ", sessionId='" + sessionId + '\'' +
+                '}';
+    }
 }

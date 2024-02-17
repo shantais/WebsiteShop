@@ -186,6 +186,14 @@ public class CartService {
         return cart;
     }
 
+    public Cart getCart(String sessionId) {
+        return cartRepository.findAll().stream()
+                .filter(cart -> cart.getSessionId().equals(sessionId))
+                .findFirst()
+                .orElse(null);
+    }
+
+
     private Optional<Cart> findCartBySessionId(String sessionId) {
         boolean isCartFound = cartRepository.findAll().stream().anyMatch(cart -> cart.getSessionId().equals(sessionId));
         if(isCartFound){
@@ -202,5 +210,7 @@ public class CartService {
         logger.info("jestem pusty");
         return Optional.empty();
     }
+
+
 
 }

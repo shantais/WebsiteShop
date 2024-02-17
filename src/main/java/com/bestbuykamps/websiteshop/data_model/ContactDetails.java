@@ -41,8 +41,6 @@ public class ContactDetails {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @Column(name = "user_id")
-    private Long userId;
 
     @OneToOne(mappedBy = "contactDetails")
     @JoinColumn(name = "user_id")
@@ -60,6 +58,8 @@ public class ContactDetails {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
     public String getFirstName() {
         return firstName;
@@ -144,13 +144,6 @@ public class ContactDetails {
         this.cartId = cartId;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public User getUser() {
         return user;
@@ -166,12 +159,15 @@ public class ContactDetails {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", street='" + adress + '\'' +
+                ", adress='" + adress + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", city='" + city + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", country='" + country + '\'' +
+                ", cartId=" + cartId +
+                ", cart=" + cart.getId() +
+                ", user=" + user +
                 '}';
     }
 }

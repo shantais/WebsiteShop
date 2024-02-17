@@ -3,6 +3,7 @@ package com.bestbuykamps.websiteshop.web_controller;
 import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.business_service.ContactDetailsService;
 import com.bestbuykamps.websiteshop.data_model.ContactDetails;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,8 @@ public class CheckoutController {
     }
 
     @PostMapping()
-    public String processCheckout(Model model ,@RequestParam String name,
+    public String processCheckout(Model model , HttpServletRequest request,
+                                  @RequestParam String name,
                                   @RequestParam String lastName,
                                   @RequestParam String email,
                                   @RequestParam String phone,
@@ -40,6 +42,7 @@ public class CheckoutController {
                                   @RequestParam String city,
                                   @RequestParam String zip) {
         logger.info("Received checkout request with following data:");
+        logger.info("session id : {}", request.getRequestedSessionId());
         logger.info("Name: {}", name);
         logger.info("Last Name: {}", lastName);
         logger.info("Email: {}", email);
@@ -49,7 +52,8 @@ public class CheckoutController {
         logger.info("City: {}", city);
         logger.info("ZIP Code: {}", zip);
 
-        contactDetailsService.createContactDetailsFromModel(name,lastName,email,phone,address,country,city,zip);
+        contactDetailsService.createContactDetails(name,lastName,email,phone,address,country,city,zip , request.getRequestedSessionId());
+
         showOrderConfirmation(model);
 
         return "ORDER_PlACED";

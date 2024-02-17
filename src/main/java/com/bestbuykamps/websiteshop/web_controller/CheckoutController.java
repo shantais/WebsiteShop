@@ -49,7 +49,9 @@ public class CheckoutController {
         logger.info("City: {}", city);
         logger.info("ZIP Code: {}", zip);
 
+        contactDetailsService.createContactDetailsFromModel(name,lastName,email,phone,address,country,city,zip);
         showOrderConfirmation(model);
+
         return "ORDER_PlACED";
     }
 

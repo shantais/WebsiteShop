@@ -15,14 +15,8 @@ public class ContactDetails {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Column(name = "street", length = 300)
-    private String street;
-
-    @Column(name = "house_number", length = 10)
-    private String houseNumber;
-
-    @Column(name = "apartment_number", length = 10)
-    private String apartmentNumber;
+    @Column(name = "adress", length = 300)
+    private String adress;
 
     @Column(name = "postal_code", length = 6)
     private String postalCode;
@@ -30,7 +24,7 @@ public class ContactDetails {
     @Column(name = "city", length = 30)
     private String city;
 
-    @Column(name = "phone_number", length = 9)
+    @Column(name = "phone_number", length = 15)
     private String phoneNumber;
 
     @Column(name = "email", length = 30)
@@ -83,29 +77,15 @@ public class ContactDetails {
         this.lastName = lastName;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
-    public String getHouseNumber() {
-        return houseNumber;
-    }
 
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public String getApartmentNumber() {
-        return apartmentNumber;
-    }
-
-    public void setApartmentNumber(String apartmentNumber) {
-        this.apartmentNumber = apartmentNumber;
-    }
 
     public String getPostalCode() {
         return postalCode;
@@ -186,9 +166,7 @@ public class ContactDetails {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", street='" + street + '\'' +
-                ", houseNumber='" + houseNumber + '\'' +
-                ", apartmentNumber='" + apartmentNumber + '\'' +
+                ", street='" + adress + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", city='" + city + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

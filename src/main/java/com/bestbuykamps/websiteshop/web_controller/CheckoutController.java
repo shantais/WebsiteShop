@@ -2,7 +2,8 @@ package com.bestbuykamps.websiteshop.web_controller;
 
 import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.business_service.ContactDetailsService;
-import com.bestbuykamps.websiteshop.data_model.ContactDetails;
+import com.bestbuykamps.websiteshop.business_service.OrdersService;
+import com.bestbuykamps.websiteshop.data_model.OrderRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,17 +11,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Random;
-
 @Controller
 @RequestMapping("/checkout")
 public class CheckoutController {
 
     private final ContactDetailsService contactDetailsService;
+    private final OrderRepository orderRepository;
+    private final OrdersService ordersService;
     private final CartService cartService;
 
-    public CheckoutController(ContactDetailsService contactDetailsService, CartService cartService) {
+
+
+    public CheckoutController(ContactDetailsService contactDetailsService, OrderRepository orderRepository, OrdersService ordersService, CartService cartService) {
         this.contactDetailsService = contactDetailsService;
+        this.orderRepository = orderRepository;
+        this.ordersService = ordersService;
         this.cartService = cartService;
     }
 
@@ -53,16 +58,16 @@ public class CheckoutController {
         logger.info("ZIP Code: {}", zip);
 
         contactDetailsService.createContactDetails(name,lastName,email,phone,address,country,city,zip , request.getRequestedSessionId());
+        ordersService.createNewOrder(request.getRequestedSessionId());
+        showOrderConfirmation(model , request.getRequestedSessionId());
 
-        showOrderConfirmation(model);
 
         return "ORDER_PlACED";
     }
 
 
-    public void showOrderConfirmation(Model model) {
-        Random random = new Random();
-        int orderNumber = random.nextInt(1000000);
+    public void showOrderConfirmation(Model model , String sessionId) {
+        Long orderNumber = ordersService.getOrder(sessionId).getOrderNumber();
         model.addAttribute("orderNumber", orderNumber);
     }
 

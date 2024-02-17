@@ -194,6 +194,8 @@ public class CartService {
     }
 
 
+
+
     private Optional<Cart> findCartBySessionId(String sessionId) {
         boolean isCartFound = cartRepository.findAll().stream().anyMatch(cart -> cart.getSessionId().equals(sessionId));
         if(isCartFound){

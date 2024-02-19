@@ -37,8 +37,8 @@ public class Product_Controller {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getProducts(Model model, HttpServletRequest request) {
-//        HttpSession session = request.getSession();
-        String sessionId = request.getRequestedSessionId();
+        HttpSession session = request.getSession();
+        String sessionId = session.getId();
         model.addAttribute("sessionId", sessionId);
         model.addAttribute("products", this.productService.getProducts());
         cartService.createCart(sessionId);
@@ -48,7 +48,7 @@ public class Product_Controller {
 
    @GetMapping("/cart")
     public String showCartPage(Model model , HttpServletRequest request) {
-//       Long cartId = cartService.getCartId(request.getRequestedSessionId());
+       Long cartId = cartService.getCartId(request.getRequestedSessionId());
 
        model.addAttribute("cartItems", this.cartService.getCartItems(request.getRequestedSessionId()));
        model.addAttribute("totalCartValue", this.cartService.getTotalCartValue(request.getRequestedSessionId()));

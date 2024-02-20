@@ -15,14 +15,8 @@ public class ContactDetails {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Column(name = "street", length = 300)
-    private String street;
-
-    @Column(name = "house_number", length = 10)
-    private String houseNumber;
-
-    @Column(name = "apartment_number", length = 10)
-    private String apartmentNumber;
+    @Column(name = "adress", length = 300)
+    private String adress;
 
     @Column(name = "postal_code", length = 6)
     private String postalCode;
@@ -30,18 +24,27 @@ public class ContactDetails {
     @Column(name = "city", length = 30)
     private String city;
 
-    @Column(name = "phone_number", length = 9)
+    @Column(name = "phone_number", length = 15)
     private String phoneNumber;
 
     @Column(name = "email", length = 30)
     private String email;
 
-
+//komentarz
     @Column(name = "country", length = 20)
     private String country;
 
+    @Column(name = "cart_id")
+    private Long cartId;
+
     @OneToOne(mappedBy = "contactDetails")
+    @JoinColumn(name = "cart_id")
     private Cart cart;
+
+
+    @OneToOne(mappedBy = "contactDetails")
+    @JoinColumn(name = "user_id")
+    private User user;
 
     //konstruktor domyślny
     public ContactDetails() {
@@ -55,6 +58,8 @@ public class ContactDetails {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
     public String getFirstName() {
         return firstName;
@@ -72,29 +77,15 @@ public class ContactDetails {
         this.lastName = lastName;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
-    public String getHouseNumber() {
-        return houseNumber;
-    }
 
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public String getApartmentNumber() {
-        return apartmentNumber;
-    }
-
-    public void setApartmentNumber(String apartmentNumber) {
-        this.apartmentNumber = apartmentNumber;
-    }
 
     public String getPostalCode() {
         return postalCode;
@@ -145,20 +136,38 @@ public class ContactDetails {
 
     }
 
+    public Long getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
+    }
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "ContactDetails{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", street='" + street + '\'' +
-                ", houseNumber='" + houseNumber + '\'' +
-                ", apartmentNumber='" + apartmentNumber + '\'' +
+                ", adress='" + adress + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", city='" + city + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", country='" + country + '\'' +
+                ", cartId=" + cartId +
+                ", cart=" + cart.getId() +
+                ", user=" + user +
                 '}';
     }
 }

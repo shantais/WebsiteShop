@@ -25,6 +25,7 @@ public class Cart {
     @Column(name = "session_id")
     private String sessionId;
 
+
     //konstruktor domyślny
     public Cart() {
     }
@@ -32,8 +33,21 @@ public class Cart {
     // gettery i settery
 
 
-    public Long getId() {
-        return id;
+    public ContactDetails getContactDetails() {
+        return contactDetails;
+    }
+
+    public void setContactDetails(ContactDetails contactDetails) {
+        this.contactDetails = contactDetails;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public List<CartItem> getCartItems() {
@@ -44,12 +58,16 @@ public class Cart {
         this.cartItems = cartItems;
     }
 
-    public ContactDetails getContactDetails() {
-        return contactDetails;
+    public void addCartItem(CartItem cartItem) {
+        this.cartItems.add(cartItem);
     }
 
-    public void setContactDetails(ContactDetails contactDetails) {
-        this.contactDetails = contactDetails;
+    public void deleteCartItem(CartItem cartItem) {
+        this.cartItems.remove(cartItem);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Long getUserId() {
@@ -60,20 +78,15 @@ public class Cart {
         this.userId = userId;
     }
 
-    public String getSessionId() {
-        return sessionId;
-    }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    // dodatkowe metody
-    public void addCartItem(CartItem cartItem) {
-        this.cartItems.add(cartItem);
-    }
-
-    public void deleteCartItem(CartItem cartItem) {
-        this.cartItems.remove(cartItem);
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", cartItems=" + cartItems +
+                ", contactDetails=" + contactDetails +
+                ", userId=" + userId +
+                ", sessionId='" + sessionId + '\'' +
+                '}';
     }
 }

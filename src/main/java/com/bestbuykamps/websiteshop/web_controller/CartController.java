@@ -2,6 +2,7 @@ package com.bestbuykamps.websiteshop.web_controller;
 
 import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.data_model.CartItem;
+import com.bestbuykamps.websiteshop.util.SessionUtil;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,11 +22,13 @@ import java.util.List;
 @RequestMapping("/cart/products")
 public class CartController {
     private final CartService cartService;
+    private final SessionUtil sessionUtil;
     private Long productId;
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
-    public CartController(CartService cartService) {
+    public CartController(CartService cartService, SessionUtil sessionUtil) {
         this.cartService = cartService;
+        this.sessionUtil = sessionUtil;
     }
 
 
@@ -59,7 +62,8 @@ public class CartController {
 //    }
     @PostMapping("/add")
     public String addProductToCart(@RequestParam Long productId, HttpServletRequest request) {
-        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+        String sessionId = sessionUtil.checkSession(request);
+        Long cartId = cartService.getCartId(sessionId);
         cartService.addProductToCart(productId, cartId);
         logger.info("Product with ID {} added to cart", productId);
         return "redirect:forward:/";
@@ -67,15 +71,17 @@ public class CartController {
     }
     @PostMapping("/plus")
     public String plusProductToCart(@RequestParam Long productId, HttpServletRequest request) {
-        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+        String sessionId = sessionUtil.checkSession(request);
+        Long cartId = cartService.getCartId(sessionId);
         cartService.addProductToCart(productId, cartId);
         logger.info("Product with ID {} added to cart", productId);
         return "redirect:/cart";
 //        return "redirect:forward:/PRODUCT_ADDED.html";
     }
     @PostMapping("/remove")
-    public String removeProduct(@RequestParam Long productId , HttpServletRequest request) {
-        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+    public String removeProduct(@RequestParam Long productId, HttpServletRequest request) {
+        String sessionId = sessionUtil.checkSession(request);
+        Long cartId = cartService.getCartId(sessionId);
         this.cartService.deleteProductFromCart(productId, cartId);
         logger.info("Product with ID {} removed from cart", productId);
         return "redirect:/cart";
@@ -83,7 +89,8 @@ public class CartController {
     }
     @PostMapping("/delete")
     public String deleteProduct(@RequestParam Long productId, HttpServletRequest request) {
-        Long cartId = cartService.getCartId(request.getRequestedSessionId());
+        String sessionId = sessionUtil.checkSession(request);
+        Long cartId = cartService.getCartId(sessionId);
         this.cartService.trashProductFromCart(productId, cartId);
         logger.info("Product with ID {} deleted from cart", productId);
         return "redirect:/cart";

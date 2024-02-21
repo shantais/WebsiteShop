@@ -7,6 +7,7 @@ import com.bestbuykamps.websiteshop.data_model.CartItem;
 import com.bestbuykamps.websiteshop.data_model.Product;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -41,7 +42,7 @@ public class ShopRestController {
     }
 
     @RequestMapping(path = "/cart/totalPrice", method = RequestMethod.POST)
-    public Double getTotalPrice(@RequestBody Long cartId) {
+    public BigDecimal getTotalPrice(@RequestBody Long cartId) {
         return this.cartService.getTotalCartValue(cartId);
     }
 }

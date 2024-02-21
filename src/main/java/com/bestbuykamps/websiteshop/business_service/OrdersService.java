@@ -9,6 +9,8 @@ import java.util.Random;
 
 @Service
 public class OrdersService {
+
+    // TODO: userRepo jeszcze nie wykorzystane
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
@@ -24,7 +26,7 @@ public class OrdersService {
 
     public void createNewOrder(String sessionId){
         Orders orders = new Orders();
-        orders.setCartId(cartService.getCartIdBySessionId(sessionId));
+        orders.setCartId(cartService.getCartId(sessionId));
         orders.setUserId(null); // obecna opcja dla niezalogowanego użytkownika
         orders.setSessionId(sessionId);
         orders.setOrderNumber(generateNewOrderNumber());

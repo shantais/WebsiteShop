@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,34 +38,29 @@ public class CartService {
 
     public void addProductToCart(Long productId, Long cartId) {
         log.info("Adding product with ID {} to the cart.", productId);
-        //odpytanie czy koszyk istnieje
-        //jak nie istnieje to tworzymy koszyk i zwracamy koszyk X
-        //jak istnieje to zwracamy koszyk X
-
+        // Sprawdzenie czy cart nie jest pusty
         boolean match = cartRepository.getById(cartId).getCartItems() == null;
-        logger.info(String.valueOf(match));
         if (!match) {
-            logger.info("Jestem w ifie");
+            // cart nie był pusty
             for (CartItem cartItem : cartRepository.getById(cartId).getCartItems()) {
-                logger.info("jestem w pętli");
-                logger.info(cartRepository.getById(cartId).getCartItems().toString());
+                // sprawdzenie czy w koszyku znajduje się item ktory chcemy dodać
                 if (cartItem.getProduct().getId().equals(productId)) {
-                    logger.info(cartItem.toString());
+                    // produkt został znaleziony więc zwiększamy jego quantity
                     cartItem.setQuantity(cartItem.getQuantity() + 1);
                     cartItemRepository.save(cartItem);
-                    logger.info(cartItem.getQuantity().toString());
                 }
             }
             if(!cartRepository.getById(cartId).getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId))) {
-                logger.info("dodałem któryś produkt z q:1");
+                // produkt nie został znaleziony wiec dodajemy go do koszyka z quantity 1
                 addCartItem(productId, cartId);
             }
         } else {
-            logger.info("jestem w elsie");
+            // koszyk był pusty więc dodajemy go do koszyka z quantity 1
             addCartItem(productId, cartId);
         }
     }
 
+    //TODO: naprawić minus
     public void deleteProductFromCart(Long productId, Long cartId) {
         // odpytanie czy koszyk istnieje
         // nie istnieje - ogarnać wyjątek
@@ -107,25 +103,33 @@ public class CartService {
         return this.cartRepository.findById(cartId).get().getCartItems();
     }
 
-
-    public double getTotalCartValue(Long cartId){
+    // total cart value poprawione na BigDecimal
+    public BigDecimal getTotalCartValue(Long cartId){
         Optional<Cart> cart = cartRepository.findById(cartId);
-        double totalPrice = 0;
+        BigDecimal totalPrice = BigDecimal.ZERO;
         for (CartItem cartItem : cart.get().getCartItems()) {
-            totalPrice += (cartItem.getProduct().getPrice() * cartItem.getQuantity());
+            BigDecimal productPrice = BigDecimal.valueOf(cartItem.getProduct().getPrice());
+            BigDecimal quantity = BigDecimal.valueOf(cartItem.getQuantity());
+            totalPrice = totalPrice.add(productPrice.multiply(quantity));
         }
-
         return totalPrice;
     }
 
+    // zwraca cart Id w postaci longa na podstawie sessionId
     public Long getCartId(String sessionId) {
-        logger.info("wlazłem do getCartId, sessionId: {}", sessionId);
-        Optional<Cart> cart = createCart(sessionId);
-        logger.info("Current cart ID: {}", cart.get().getId().toString());
-        return cart.get().getId();
+        // jesli pamiętaliśmy w endpoincie przejść przez sessionUtil.checkSession(request); to wiemy na pewno, że koszyk i sesja istnieją
+        // czyli wystarczy znaleźć ID koszyka po ID sesji
+        Optional<Cart> cartWithMatchingSessionId = cartRepository.findAll().stream().filter(cart -> cart.getSessionId().equals(sessionId)).findFirst();
+        return cartWithMatchingSessionId.get().getId();
+
+
+//        logger.info("wlazłem do getCartId, sessionId: {}", sessionId);
+//        Optional<Cart> cart = createCart(sessionId);
+//        logger.info("Current cart ID: {}", cart.get().getId().toString());
+//        return cart.get().getId();
     }
 
-    public Optional<Cart> createCart (String sessionId){
+    public void createCart (String sessionId){
         Optional<Cart> cart = findCartIdBySessionId(sessionId);
         if (cart.isEmpty()) {
             cart = Optional.of(new Cart());
@@ -134,7 +138,7 @@ public class CartService {
             cartRepository.save(cart.get());
             cartRepository.flush();
         }
-        return cart;
+//        return cart;
     }
 
     private Optional<Cart> findCartIdBySessionId(String sessionId) {
@@ -151,6 +155,13 @@ public class CartService {
         }
         logger.info("jestem pusty");
         return Optional.empty();
+    }
+
+    public Cart getCart(String sessionId) {
+        return cartRepository.findAll().stream()
+                .filter(cart -> cart.getSessionId().equals(sessionId))
+                .findFirst()
+                .orElse(null);
     }
 
     private void addCartItem(Long productId, Long cartId){

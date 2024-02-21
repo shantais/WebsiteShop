@@ -74,7 +74,7 @@ public class CartService {
                 if (cartItem.getProduct().getId().equals(productId)) {
                     cartItem.setQuantity(cartItem.getQuantity() - 1);
                     if (cartItem.getQuantity() == 0) {
-                        trashProductFromCart(cartId, cartItem.getProduct().getId());
+                        trashProductFromCart(productId, cartId);
                         break;
                     }
                     break;

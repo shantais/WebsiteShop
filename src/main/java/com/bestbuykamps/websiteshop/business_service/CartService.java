@@ -67,14 +67,16 @@ public class CartService {
         // istnieje - sprawdzić czy jest klucz w mapie o wartości productId
         // jeżeli q: równe 1 , usuwamy klucz+wartość
         //jeżeli q: > 1(2,3...X) zmniejszamy q: o 1
+
         Optional<Cart> cart = cartRepository.findById(cartId);
-        boolean match = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId)); // zwraca boolean czy produkt jest w koszyku
-        if (match) {
+        boolean isProductInCart = cart.get().getCartItems().stream().anyMatch(item -> item.getProduct().getId().equals(productId));
+        // isProductInCart zwraca boolean czy produkt jest w koszyku
+        if (isProductInCart) {
             for (CartItem cartItem : cart.get().getCartItems()) {
                 if (cartItem.getProduct().getId().equals(productId)) {
                     cartItem.setQuantity(cartItem.getQuantity() - 1);
                     if (cartItem.getQuantity() == 0) {
-                        trashProductFromCart(cartId, cartItem.getProduct().getId());
+                        trashProductFromCart(productId, cartId);
                         break;
                     }
                     break;
@@ -82,6 +84,7 @@ public class CartService {
                 }
             }
             cartRepository.save(cart.get());
+            cartRepository.flush();
         }
     }
 
@@ -96,6 +99,7 @@ public class CartService {
                 }
             }
             cartRepository.save(cart.get());
+            cartRepository.flush();
         }
     }
 
@@ -130,7 +134,8 @@ public class CartService {
     }
 
     public void createCart (String sessionId){
-        Optional<Cart> cart = findCartIdBySessionId(sessionId);
+        Long cartId = getCartId(sessionId);
+        Optional<Cart> cart = cartRepository.findById(cartId); //findCartIdBySessionId(sessionId);
         if (cart.isEmpty()) {
             cart = Optional.of(new Cart());
             cart.get().setSessionId(sessionId);
@@ -141,21 +146,21 @@ public class CartService {
 //        return cart;
     }
 
-    private Optional<Cart> findCartIdBySessionId(String sessionId) {
-        boolean isCartFound = cartRepository.findAll().stream().anyMatch(cart -> cart.getSessionId().equals(sessionId));
-        if(isCartFound){
-            List<Cart> carts = cartRepository.findAll();
-            for (Cart cart: carts ) {
-                if(cart.getSessionId().equals(sessionId)){
-                    return Optional.of(cart);
-                }
-            }
+//    private Optional<Cart> findCartIdBySessionId(String sessionId) {
+//        boolean isCartFound = cartRepository.findAll().stream().anyMatch(cart -> cart.getSessionId().equals(sessionId));
+//        if(isCartFound){
+//            List<Cart> carts = cartRepository.findAll();
+//            for (Cart cart: carts ) {
+//                if(cart.getSessionId().equals(sessionId)){
+//                    return Optional.of(cart);
+//                }
+//            }
 //            logger.info(String.valueOf(Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get())));
 //            return Optional.of(cartRepository.findAll().stream().findFirst().filter(cart -> cart.getSessionId().equals(sessionId)).get());
-        }
-        logger.info("jestem pusty");
-        return Optional.empty();
-    }
+//        }
+//        logger.info("jestem pusty");
+//        return Optional.empty();
+//    }
 
     public Cart getCart(String sessionId) {
         return cartRepository.findAll().stream()

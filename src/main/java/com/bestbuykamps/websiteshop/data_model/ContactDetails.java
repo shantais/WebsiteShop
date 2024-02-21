@@ -1,6 +1,7 @@
 package com.bestbuykamps.websiteshop.data_model;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "contact_details")
@@ -10,28 +11,36 @@ public class ContactDetails {
     private Long id;
 
     @Column(name = "first_name", length = 50)
+    @Length(min = 3, max = 50, message = "First name has to be between 3 and 50 characters long")
     private String firstName;
 
     @Column(name = "last_name", length = 50)
+    @Length(min = 3, max = 50, message = "Last name has to be between 3 and 50 characters long")
     private String lastName;
 
+    //Todo: dodać właściwą walidację do address
     @Column(name = "adress", length = 300)
     private String adress;
 
     @Column(name = "postal_code", length = 6)
+    @Length(min = 4, max = 6, message = "Postal code has to be between 4 and 6 characters long")
     private String postalCode;
 
     @Column(name = "city", length = 30)
+    @Length(min = 3, max = 30, message = "City has to be between 3 and 30 characters long")
     private String city;
 
-    @Column(name = "phone_number", length = 15)
+    @Column(name = "phone_number", length = 9)
+    @Length(min = 6, max = 9, message = "Phone number has to be between 6 and 9 characters long")
     private String phoneNumber;
 
     @Column(name = "email", length = 30)
+    @Length(min = 6, max = 30, message = "Email has to be between 6 and 30 characters long")
     private String email;
 
 //komentarz
     @Column(name = "country", length = 20)
+    @Length(min = 3, max = 20, message = "Country has to be between 3 and 20 characters long")
     private String country;
 
     @Column(name = "cart_id")
@@ -58,8 +67,6 @@ public class ContactDetails {
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     public String getFirstName() {
         return firstName;

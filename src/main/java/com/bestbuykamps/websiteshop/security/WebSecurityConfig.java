@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,24 +38,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(toH2Console())
-                        .disable()
-                )
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(
-                                new AntPathRequestMatcher("/images/**") // Allow access to static resources ^
-                        ).permitAll()
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .permitAll()
-                        .defaultSuccessUrl("/", true)
-                        .failureUrl("/login?error=true")
-                )
-                .logout(LogoutConfigurer::permitAll);
+                .httpBasic(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry
+                        -> authorizationManagerRequestMatcherRegistry
+                        .requestMatchers(HttpMethod.GET,"/hotels/**").hasAuthority("ROLE_USER") // TODO: dashboard dla usera i dodać dashboard.html z przyciskiem do wylogowania
+                        .anyRequest().permitAll());
 
         return http.build();
     }

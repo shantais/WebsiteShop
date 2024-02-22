@@ -18,7 +18,7 @@ public class SessionUtil {
 
     public String checkSession(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // Do not create a new session if it doesn't exist
-        if (session != null) {
+        if (session != null && session.equals("Order Placed")) {
             String sessionId = session.getId();
             logger.info("Session ID existed: {}", sessionId);
             return sessionId;

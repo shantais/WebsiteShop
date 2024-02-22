@@ -42,7 +42,8 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry
                         -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers(HttpMethod.GET,"/hotels/**").hasAuthority("ROLE_USER") // TODO: dashboard dla usera i dodać dashboard.html z przyciskiem do wylogowania
+                        .requestMatchers(HttpMethod.GET,"/adminPanel").hasAuthority("ADMIN")
+                        // TODO: dashboard dla admina i dodać dashboard.html z przyciskiem do wylogowania i tabela z lista zamówień
                         .anyRequest().permitAll());
 
         return http.build();
@@ -54,7 +55,7 @@ public class WebSecurityConfig {
                 User.withDefaultPasswordEncoder()
                         .username("user")
                         .password("password")
-                        .roles("USER")
+                        .roles("ADMIN")
                         .build();
 
         return new InMemoryUserDetailsManager(user);

@@ -63,7 +63,7 @@ public class CheckoutController {
         showOrderConfirmation(model , sessionId);
 
 
-        return "ORDER_PlACED";
+        return "redirect:/confirmation";
     }
 
 

@@ -115,6 +115,16 @@ public class CartService {
         return totalPrice;
     }
 
+    public Long getCartIdBySessionId(String sessionId){
+        List<Cart> carts = cartRepository.findAll();
+        for (Cart cart: carts ) {
+            if(cart.getSessionId().equals(sessionId)){
+                return cart.getId();
+            }
+        }
+        return -1L;
+    }
+
     // zwraca cart Id w postaci longa na podstawie sessionId
     public Long getCartId(String sessionId) {
         // jesli pamiętaliśmy w endpoincie przejść przez sessionUtil.checkSession(request); to wiemy na pewno, że koszyk i sesja istnieją
@@ -141,7 +151,7 @@ public class CartService {
 //        return cart;
     }
 
-    private Optional<Cart> findCartIdBySessionId(String sessionId) {
+    public Optional<Cart> findCartIdBySessionId(String sessionId) {
         boolean isCartFound = cartRepository.findAll().stream().anyMatch(cart -> cart.getSessionId().equals(sessionId));
         if(isCartFound){
             List<Cart> carts = cartRepository.findAll();
@@ -164,7 +174,7 @@ public class CartService {
                 .orElse(null);
     }
 
-    private void addCartItem(Long productId, Long cartId){
+    public void addCartItem(Long productId, Long cartId){
         CartItem cartItem = new CartItem();
         cartItem.setCart(cartRepository.getById(cartId));
         cartItem.setQuantity(1);

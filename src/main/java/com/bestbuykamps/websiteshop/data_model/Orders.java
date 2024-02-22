@@ -62,7 +62,6 @@ public class Orders {
         this.orderNumber = orderNumber;
     }
 
-
     public String getSessionId() {
         return sessionId;
     }

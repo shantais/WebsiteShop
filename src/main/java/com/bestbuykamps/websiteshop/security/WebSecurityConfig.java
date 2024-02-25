@@ -21,20 +21,6 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    // endpointy które są widoczne bez logowania
-    private static final String[] AUTH_WHITELIST = {
-            "/",
-            "/cart",
-            "/cart/products/",
-            "/cart/products/**",
-            "/checkout",
-            "/confirmation",
-            "/api",
-            "/api/**",
-            "/login",
-            "/h2-console",
-            "/h2-console/**"
-    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -42,9 +28,17 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry
                         -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers(HttpMethod.GET,"/adminPanel").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/admin/panel").hasAuthority("ADMIN")
                         // TODO: dashboard dla admina i dodać dashboard.html z przyciskiem do wylogowania i tabela z lista zamówień
-                        .anyRequest().permitAll());
+                        .anyRequest().permitAll())
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/admin/panel", true)
+                        .failureUrl("/login?error=true")
+                )
+                .logout((logout) -> logout.permitAll());
+
 
         return http.build();
     }

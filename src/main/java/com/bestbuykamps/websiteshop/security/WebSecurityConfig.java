@@ -25,7 +25,6 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .httpBasic(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry
                         -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers(HttpMethod.GET,"/admin/panel").hasAuthority("ADMIN")
@@ -40,7 +39,8 @@ public class WebSecurityConfig {
                 .logout((logout) -> logout
                         .logoutUrl("/admin/logout")
                         .logoutSuccessUrl("/")
-                        .permitAll());
+                        .permitAll())
+                .csrf(AbstractHttpConfigurer::disable);
 
 
         return http.build();
@@ -53,6 +53,7 @@ public class WebSecurityConfig {
                         .username("user")
                         .password("password")
                         .roles("ADMIN")
+                        .authorities("ADMIN")
                         .build();
 
         return new InMemoryUserDetailsManager(user);

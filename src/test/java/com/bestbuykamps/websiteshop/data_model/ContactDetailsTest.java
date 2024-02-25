@@ -21,10 +21,10 @@ class ContactDetailsTest {
     }
 
     @Test
-    public void testSetAndGetStreet() {
+    public void testSetAndGetAdress() {
         ContactDetails contact = new ContactDetails();
-     //  contact.setStreet("123 Nowogrodzka");
-     //  assertEquals("123 Nowogrodzka", contact.getStreet());
+       contact.setAdress("123 Nowogrodzka");
+       assertEquals("123 Nowogrodzka", contact.getAdress());
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.bestbuykamps.websiteshop.web_controller;
 import com.bestbuykamps.websiteshop.business_service.CartService;
 import com.bestbuykamps.websiteshop.business_service.ProductService;
 import com.bestbuykamps.websiteshop.data_model.CartItem;
+import com.bestbuykamps.websiteshop.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -23,10 +24,15 @@ public class Product_Controller {
 
     private final ProductService productService;
     private final CartService cartService;
+    private final SessionUtil sessionUtil;
+
+
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-    public Product_Controller(ProductService productService, CartService cartService) {
+
+    public Product_Controller(ProductService productService, CartService cartService, SessionUtil sessionUtil) {
         this.productService = productService;
         this.cartService = cartService;
+        this.sessionUtil = sessionUtil;
     }
 
 //    @RequestMapping(method = RequestMethod.GET)
@@ -37,29 +43,30 @@ public class Product_Controller {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getProducts(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String sessionId = session.getId();
+        String sessionId = sessionUtil.checkSession(request);
+        logger.info(sessionId);
         model.addAttribute("sessionId", sessionId);
         model.addAttribute("products", this.productService.getProducts());
-        cartService.createCart(sessionId);
+//        cartService.createCart(sessionId);
         return "PRODUCTS_PAGE";
     }
 
-
    @GetMapping("/cart")
-    public String showCartPage(Model model , HttpServletRequest request) {
-       Long cartId = cartService.getCartId(request.getRequestedSessionId());
-
-       model.addAttribute("cartItems", this.cartService.getCartItems(request.getRequestedSessionId()));
-       model.addAttribute("totalCartValue", this.cartService.getTotalCartValue(request.getRequestedSessionId()));
+    public String showCartPage(Model model, HttpServletRequest request) {
+       String sessionId = sessionUtil.checkSession(request);
+       logger.info("wlazłem do showCartPage w PC");
+       Long cartId = cartService.getCartId(sessionId);
+       logger.info("cart Id: {}", cartId);
+       model.addAttribute("cartItems", this.cartService.getCartItems(cartId));
+       model.addAttribute("totalCartValue", this.cartService.getTotalCartValue(cartId));
        return "CART_PAGE";
    }
 
     @PostMapping()
     public String addProductToCart(@RequestParam Long productId, HttpServletRequest request) {
-
-        cartService.addProductToCart( request.getRequestedSessionId(),productId);
-        logger.info("request{} " , request.getSession().toString());
+        String sessionId = sessionUtil.checkSession(request);
+        Long cartId = cartService.getCartId(sessionId);
+        cartService.addProductToCart(productId, cartId);
 //        logger.info("Product with ID {} added to cart", productId);
         return "PRODUCTS_PAGE";
 //        return "redirect:forward:/PRODUCT_ADDED.html";

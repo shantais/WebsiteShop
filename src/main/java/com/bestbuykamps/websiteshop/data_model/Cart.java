@@ -13,7 +13,7 @@ public class Cart {
     private Long id;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> cartItems = new ArrayList<>(); ;
+    private List<CartItem> cartItems;
 
     @OneToOne
     @JoinColumn(name = "contact_details_id")
@@ -32,10 +32,6 @@ public class Cart {
 
     // gettery i settery
 
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public ContactDetails getContactDetails() {
         return contactDetails;
@@ -83,5 +79,14 @@ public class Cart {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", cartItems=" + cartItems +
+                ", contactDetails=" + contactDetails +
+                ", userId=" + userId +
+                ", sessionId='" + sessionId + '\'' +
+                '}';
+    }
 }

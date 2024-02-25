@@ -89,4 +89,8 @@ public class Cart {
                 ", sessionId='" + sessionId + '\'' +
                 '}';
     }
+
+    public void setId(Long cartId) {
+
+    }
 }

@@ -29,7 +29,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry
                         -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers(HttpMethod.GET,"/admin/panel").hasAuthority("ADMIN")
-                        // TODO: dashboard dla admina i dodać dashboard.html z przyciskiem do wylogowania i tabela z lista zamówień
+                        // TODO: na dashboard.html z przyciskiem do wylogowania i tabela z lista zamówień
                         .anyRequest().permitAll())
                 .formLogin((form) -> form
                         .loginPage("/login")
@@ -37,7 +37,10 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/admin/panel", true)
                         .failureUrl("/login?error=true")
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout
+                        .logoutUrl("/admin/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll());
 
 
         return http.build();
